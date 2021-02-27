@@ -7,6 +7,8 @@ app.set('view engine', 'ejs');
 app.use(express.json());
 app.use(express.static('views'));
 
+app.use('/api/comments', require('./route/posts_commentsRoute'))
+
 app.get('/', (req, res) => {
   res.render('index');
 });
