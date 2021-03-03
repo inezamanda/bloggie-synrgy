@@ -8,12 +8,15 @@ module.exports = {
         type: Sequelize.STRING(21)
       },
       email: {
+        allowNull: false,
         type: Sequelize.STRING(30)
       },
       password: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       username: {
+        allowNull: false,
         type: Sequelize.STRING(30)
       },
       fullName: {
@@ -35,9 +38,11 @@ module.exports = {
         type: Sequelize.STRING
       },
       role: {
-        type: Sequelize.STRING(5)
+        type: Sequelize.ENUM({
+          values: ['User', 'Admin']
+        })
       },
-      followers: {
+      followers_id: {
         type: Sequelize.STRING(21)
       },
       createdAt: {

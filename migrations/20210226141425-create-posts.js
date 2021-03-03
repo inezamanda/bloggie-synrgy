@@ -7,23 +7,33 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.STRING(21)
       },
-      users_id: {
-        type: Sequelize.STRING(21)
+      users_id: { 
+        type: Sequelize.STRING(21),
+        references: {
+          model: 'Users',
+          key: 'id'
+        }
       },
       title: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       content: {
+        allowNull: false,
         type: Sequelize.TEXT
       },
       files: {
         type: Sequelize.STRING
       },
       filterView: {
-        type: Sequelize.STRING(30)
+        type: Sequelize.ENUM({
+          values: ['Anyone', 'Followers']
+        })
       },
       filterComment: {
-        type: Sequelize.STRING(30)
+        type: Sequelize.ENUM({
+          values: ['Anyone', 'Followers', 'None']
+        })
       },
       isReported: {
         type: Sequelize.BOOLEAN

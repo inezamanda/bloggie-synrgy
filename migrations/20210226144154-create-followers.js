@@ -7,8 +7,12 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.STRING(21)
       },
-      users_id: {
-        type: Sequelize.STRING(21)
+     users_id: {
+        type: Sequelize.STRING(21),
+        references: {
+          model: 'Users',
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,

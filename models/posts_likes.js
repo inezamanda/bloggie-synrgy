@@ -10,11 +10,13 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Posts_likes.hasOne(models.Users, {foreignKey: 'id'})
+      Posts_likes.hasOne(models.Posts, {foreignKey: 'id'})
     }
   };
   Posts_likes.init({
-    posts_id: DataTypes.STRING
+    posts_id: DataTypes.STRING,
+    users_id: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Posts_likes',
