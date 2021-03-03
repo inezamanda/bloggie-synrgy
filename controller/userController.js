@@ -6,7 +6,6 @@ const { Users } = require(`../models`);
 const bcrypt = require(`bcrypt`);
 const jwt = require(`jsonwebtoken`);
 const multer = require(`multer`);
-const { image } = require('faker');
 
 // create JWT
 const generateToken = () => {
@@ -20,35 +19,31 @@ const generateToken = () => {
 
 const register = async(req,res,next) => {
     try {
-       const {
-           email, username, password, fullName ,occupation, about, interest, role
-       } = req.body;
-
-       const image_profile = req.file ? req.file.path : undefined;
-       const encryptedPassword = await bcrypt.hash(password,10)
-
-       const user = await Users.create({
+        const {
+           email, username, password, role
+        } = req.body;
+       
+        const encryptedPassword = await bcrypt.hash(password,10);
+        const image_profile = req.file ? req.file.path : undefined;
+        const whatRole = (role === undefined || role === 'user') ?  'user' : 'admin';
+        
+        const user = await Users.create({
            id: nanoid(),
            email,
            username,
            password: encryptedPassword,
-           role,
-           fullName,
-           image_profile: image_profile,
-           occupation,
-           about,
-           interest
-       });
+           role: whatRole,
+        });
 
-       res.status(201).json({
+        res.status(201).json({
            success : true,
            status : `Register success`,
-           data : {email, username, fullName, image_profile, occupation, about, interest, role}
-       });
-   }
-   catch(error) {
+           data : {email, username, image_profile, role}
+        });
+    }
+    catch(error) {
        next(error)
-   }
+    }
 }
 
 module.exports = {
