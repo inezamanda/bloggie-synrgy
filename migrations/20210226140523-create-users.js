@@ -9,7 +9,9 @@ module.exports = {
       },
       email: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        unique: true,
+        require : true
       },
       password: {
         type: Sequelize.STRING
@@ -20,28 +22,22 @@ module.exports = {
         unique: true
       },
       fullName: {
-        //allowNull: false,
         type: Sequelize.STRING(100)
       },
       image_profile: {
-        // allowNull: true,
-        type: Sequelize.BLOB
+        type: Sequelize.STRING
 
       },
       image_header: {
-        // allowNull: true,
-        type: Sequelize.BLOB
+        type: Sequelize.STRING
       },
       about: {
-        // allowNull: true,
         type: Sequelize.TEXT
       },
       occupation: {
-        // allowNull: true,
         type: Sequelize.STRING
       },
       location: {
-        // allowNull: true,
         type: Sequelize.STRING
       },
       role: {

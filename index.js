@@ -12,6 +12,10 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
+// setting multer
+const multer = require(`./lib/multerUpload`);
+app.use(multer)
+
 // setting passport
 const passport = require(`./lib/passport`)
 app.use(passport.initialize())

@@ -5,6 +5,7 @@ const { nanoid } = require(`nanoid`);
 const { Users } = require(`../models`);
 const bcrypt = require(`bcrypt`);
 const jwt = require(`jsonwebtoken`);
+const multer = require(`multer`);
 
 // create JWT
 const generateToken = () => {
@@ -17,12 +18,13 @@ const generateToken = () => {
 }
 
 const register = async(req,res,next) => {
-   try {
+    try {
        const {
-           email, username, password, name,
-           image_profile, occupation, about, interest, role
+           email, username, password, name,occupation, about, interest, role
        } = req.body;
        
+       const image_profile = req.file.path;
+
        const encryptedPassword = await bcrypt.hash(password,10)
 
        const user = await Users.create({
@@ -32,16 +34,16 @@ const register = async(req,res,next) => {
            password: encryptedPassword,
            role,
            name,
-           image_profile,
+           image_profile: image_profile,
            occupation,
            about,
            interest
        });
 
-       res.json({
+       res.status(201).json({
            success : true,
            status : `Register success`,
-           data : {user}
+           data : {email, username, name, image_profile, occupation, about, interest, role}
        });
    }
    catch(error) {
