@@ -18,6 +18,11 @@ class BaseController {
     })
   }
 
+  getId(id){
+    return this.model.findOne(
+      {where: {id}})
+  }
+
   edit(id, data){
     return this.model.update(
       data, {
