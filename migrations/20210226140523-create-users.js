@@ -8,37 +8,48 @@ module.exports = {
         type: Sequelize.STRING(21)
       },
       email: {
-        type: Sequelize.STRING(30)
+        allowNull: false,
+        type: Sequelize.STRING
       },
       password: {
         type: Sequelize.STRING
       },
       username: {
-        type: Sequelize.STRING(30)
+        allowNull: false,
+        type: Sequelize.STRING,
+        unique: true
       },
       fullName: {
+        //allowNull: false,
         type: Sequelize.STRING(100)
       },
       image_profile: {
-        type: Sequelize.STRING
+        // allowNull: true,
+        type: Sequelize.BLOB
+
       },
       image_header: {
-        type: Sequelize.STRING
+        // allowNull: true,
+        type: Sequelize.BLOB
       },
       about: {
+        // allowNull: true,
         type: Sequelize.TEXT
       },
       occupation: {
+        // allowNull: true,
         type: Sequelize.STRING
       },
       location: {
+        // allowNull: true,
         type: Sequelize.STRING
       },
       role: {
-        type: Sequelize.STRING(5)
+        allowNull: false,
+        type: Sequelize.ENUM('admin', 'user')
       },
       followers: {
-        type: Sequelize.STRING(21)
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
