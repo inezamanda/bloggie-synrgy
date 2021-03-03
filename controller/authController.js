@@ -20,10 +20,10 @@ const generateToken = () => {
 const register = async(req,res,next) => {
     try {
        const {
-           email, username, password, name,occupation, about, interest, role
+           email, username, password, fullName ,occupation, about, interest, role, image_profile
        } = req.body;
        
-       const image_profile = req.file.path;
+       //const {image_profile} = req.file;
 
        const encryptedPassword = await bcrypt.hash(password,10)
 
@@ -33,8 +33,8 @@ const register = async(req,res,next) => {
            username,
            password: encryptedPassword,
            role,
-           name,
-           image_profile: image_profile,
+           fullName,
+           image_profile,
            occupation,
            about,
            interest
@@ -43,7 +43,7 @@ const register = async(req,res,next) => {
        res.status(201).json({
            success : true,
            status : `Register success`,
-           data : {email, username, name, image_profile, occupation, about, interest, role}
+           data : {email, username, fullName, image_profile, occupation, about, interest, role}
        });
    }
    catch(error) {

@@ -10,11 +10,11 @@ module.exports = {
       email: {
         allowNull: false,
         type: Sequelize.STRING,
-        unique: true,
-        require : true
+        unique: true
       },
       password: {
-        type: Sequelize.STRING
+        allowNull: false,
+        type: Sequelize.STRING,
       },
       username: {
         allowNull: false,
@@ -22,11 +22,11 @@ module.exports = {
         unique: true
       },
       fullName: {
+        allowNull: false,
         type: Sequelize.STRING(100)
       },
       image_profile: {
         type: Sequelize.STRING
-
       },
       image_header: {
         type: Sequelize.STRING
@@ -41,7 +41,6 @@ module.exports = {
         type: Sequelize.STRING
       },
       role: {
-        allowNull: false,
         type: Sequelize.ENUM('admin', 'user')
       },
       followers: {
