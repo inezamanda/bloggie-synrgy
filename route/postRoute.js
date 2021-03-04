@@ -5,8 +5,8 @@ const app = express.Router()
 app.get('/', async (req, res, next) => {
   try {
     const result = await postController.get()
-    res.json({
-      status: '200 OK',
+    res.status(200).json({
+      success: true,
       message: 'Success',
       data: result
     })
@@ -19,8 +19,8 @@ app.get('/:id', async (req, res, next) => {
   try {
     const { id } = req.params
     const result = await postController.get({ id })
-    res.json({
-      status: '200 OK',
+    res.status(200).json({
+      success: true,
       message: 'Success',
       data: result
     })
@@ -41,8 +41,8 @@ app.post('/', async (req, res, next) => {
       filterComment,
       isReported
     })
-    res.json({
-      status: '200 OK',
+    res.status(201).json({
+      success: true,
       message: 'Success',
       data: result
     })
@@ -64,8 +64,8 @@ app.put('/:id', async (req, res, next) => {
       filterComment,
       isReported
     })
-    res.json({
-      status: '200 OK',
+    res.status(201).json({
+      success: true,
       message: `Updated id = '${id}' successfully`,
       data: result
     })
@@ -78,8 +78,8 @@ app.delete('/:id', async (req, res, next) => {
   try {
     const { id } = req.params
     const result = await postController.remove(id)
-    res.json({
-      status: '200 OK',
+    res.status(200).json({
+      success: true,
       message: `Deleted id = '${id}' successfully`,
       data: result
     })
