@@ -12,6 +12,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.changeColumn('Users', 'followers_id')
+    await queryInterface.removeConstraint('Users', 'Users_followers_id_fkey')
   }
 };
