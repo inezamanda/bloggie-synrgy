@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const express = require('express');
 const app = express();
+var bodyParser = require('body-parser')
 
 // setting multer
 const multer = require(`./middleware/multerMiddleware`);
@@ -13,6 +14,10 @@ const authRoute = require(`./route/authRoute`)
 app.use(authRoute)
 
 app.use(express.urlencoded({extended : true}))
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+// parse application/json
+app.use(bodyParser.json())
 app.set('view engine', 'ejs');
 app.use(express.json());
 app.use(express.static('views'));

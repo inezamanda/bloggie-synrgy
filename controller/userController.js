@@ -27,6 +27,24 @@ class UserController extends BaseController {
         payload.token = jwt.sign({ id }, JWT_SECRET);
         return payload;
     }
+
+    async login (email, password) {
+        const user = await Users.findOne({
+            where: { email }
+        })
+        const checkPassword = await bcrypt.compare(password, user.password)
+
+        if (checkPassword){
+            const payload = {
+                id: user.id, 
+                email: user.email,
+                token: jwt.sign({ id: user.id }, JWT_SECRET)
+            };
+            return payload;
+        } else {
+            return "Sorry, your password was incorrect. Please double-check your password."
+        }
+    }
 }
 
 module.exports = UserController
