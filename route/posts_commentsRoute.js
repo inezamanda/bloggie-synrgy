@@ -1,89 +1,79 @@
 const express = require('express')
 const PostsCommentsController = require('../controller/posts_commentsController')
-
-const {validationResult} = require('express-validator')
-const {commentsValidation} = require('../validator/posts_commentsValidator')
-const seed = require('../seeders/20210302072933-posts_comments')
+const {commentValidation} = require('../validator/validation')
 
 const postsComments = new PostsCommentsController()
 const app = express.Router()
 
-app.post('/',  commentsValidation, async (req, res) => {
-  const result = await postsComments.add(req.body)
-  const errors = validationResult(req)
-  if(!errors.isEmpty()){
-    res.status(400).json({
-      status: '400 Bad Request',
-      message: errors.array().map(value => `${value.msg}`)
-    })
-  }else{
+app.post('/', async (req, res, next) => {
+  try {
+    const result = await commentValidation.validateAsync(req.body)
+    const comment = await postsComments.add(result)
     res.status(200).json({
       status: '200 OK',
       message: 'Add comments successful',
-      data: result
+      data: comment
     })
+  } catch(error) {
+    next(error)
   }
 })
 
-app.get('/', async (req, res) => {
-  const result = await postsComments.get(req.query)
+app.get('/', async (req, res, next) => {
+  const comment =  await postsComments.get(req.query)
   res.status(200).json({
     status: '200 OK',
     message: 'Read all comments successful',
-    data: result
+    data: comment
   })
 })
 
-app.get('/:id', async (req, res) => {
+app.get('/:id', async (req, res, next) => {
   const {params} = req
-  const result = await postsComments.getId(params.id)
-  if (seed.data.filter(({id}) => id == params.id)){
+  const comment = await postsComments.getId(params.id)
+  if (comment) {
     res.status(200).json({
       status: '200 OK',
-      message: 'Read comments successful',
-      data: result
-  })
-  }else {
+      message: 'Read comments successful'
+    })
+  } else{
     res.status(404).json({
       status: '404 Not Found',
       message: 'Comments not found'
     })
-  }  
+  }
 })
 
-app.put('/:id', async (req, res) => {
-  const {body, params} = req
-  await postsComments.edit(params.id, body)
-  const errors = validationResult(req)
-  if(!errors.isEmpty()){
-    res.status(400).json({
-      status: '400 Bad Request',
-      message: errors.array().map(value => `${value.msg}`)
-    })
-  }else{
-    if (seed.data.find(({id}) => id == params.id)){
+app.put('/:id', async (req, res, next) => {
+  try {
+    const {body, params} = req
+    const result = await commentValidation.validateAsync(body)
+    const comment = await postsComments.edit(params.id, result)
+    if(comment[0]){
       res.status(200).json({
-      status: '200 OK',
-      message: 'Edit comments successful'
-    })
+        status: '200 OK',
+        message: 'Edit comments successful'
+      })
     } else {
       res.status(404).json({
         status: '404 Not Found',
         message: 'Comments not found'
       })
     }
+  } catch(error) {
+    next(error)
   }
 })
 
-app.delete('/:id', async (req, res) => {
+app.delete('/:id', async (req, res, next) => {
   const {params} = req
-  await postsComments.remove(params.id)
-  if (seed.data.filter(({id}) => id == params.id)){
+  const comment = await postsComments.remove(params.id)
+  if (comment) {
     res.status(200).json({
       status: '200 OK',
       message: 'Delete comments successful'
     })
-  } else {
+  } else{
     res.status(404).json({
       status: '404 Not Found',
       message: 'Comments not found'
@@ -92,4 +82,3 @@ app.delete('/:id', async (req, res) => {
 })
 
 module.exports = app
-
