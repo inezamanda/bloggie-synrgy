@@ -1,0 +1,177 @@
+{
+	"info": {
+		"_postman_id": "db14263e-3e56-40ee-ba10-db2c9519cd10",
+		"name": "Mini Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Post get all",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/post",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post get all Copy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/post/y3yK-SbVH-gJksCtpiCW4",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"post",
+						"y3yK-SbVH-gJksCtpiCW4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post add",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"users_id\": \"{{$randomLoremWord}}\",\n    \"title\": \"{{$randomLoremSentence}}\",\n    \"content\": \"{{$randomLoremParagraph}}\",\n    \"files\": \"../media/{{$randomCommonFileName}}\",\n    \"filterView\": \"any\",\n    \"filterComment\": \"any\",\n    \"isReported\": false\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/post",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post add Copy",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"users_id\": \"{{$randomUUID}}\",\n    \"title\": \"{{$randomLoremSentence}}\",\n    \"content\": \"{{$randomLoremParagraph}}\",\n    \"files\": \"../media/{{$randomCommonFileName}}\",\n    \"filterView\": \"any\",\n    \"filterComment\": \"any\",\n    \"isReported\": false\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/post/p-U95ITyorFyl9XIxj8l8",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"post",
+						"p-U95ITyorFyl9XIxj8l8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/post/adgdadg",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"post",
+						"adgdadg"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post user reset password",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"chaniatrial@gmail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3005/user/forgot",
+					"host": [
+						"localhost"
+					],
+					"port": "3005",
+					"path": [
+						"user",
+						"forgot"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post user reset password Copy",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"password\": \"chaniaeva22\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3005/user/reset/1BjAVq-c8q858hIVhfosq",
+					"host": [
+						"localhost"
+					],
+					"port": "3005",
+					"path": [
+						"user",
+						"reset",
+						"1BjAVq-c8q858hIVhfosq"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

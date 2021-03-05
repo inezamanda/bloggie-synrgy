@@ -11,6 +11,8 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
+app.use('/users', require('./route/resetPasswordRoute'))
+
 const port = process.env.PORT;
 app.listen(port, () => {
   console.log(`Server is listening on http://localhost:${port}`);
