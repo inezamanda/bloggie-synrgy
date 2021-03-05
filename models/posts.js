@@ -14,7 +14,15 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Posts.init({
-    users_id: DataTypes.STRING
+    users_id: DataTypes.STRING,
+    title: DataTypes.STRING,
+    content: DataTypes.TEXT,
+    files: DataTypes.STRING,
+    filterView: DataTypes.STRING,
+    filterComment: DataTypes.STRING,
+    isReported: DataTypes.BOOLEAN,
+    createdAt: DataTypes.DATE,
+    updatedAt: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'Posts',
