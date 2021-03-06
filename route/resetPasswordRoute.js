@@ -1,5 +1,5 @@
 const express = require('express')
-const sendMailer = require('../middleware/sendEmail')
+const sendMailer = require('../middleware/nodemailerMiddleware')
 const usersController = require('../controller/userController')
 const bcrypt = require(`bcrypt`);
 
@@ -13,7 +13,7 @@ app.post('/forgot', async (req, res, next) => {
         if (!user) {
             res.send('cant find email')
         }
-        sendMailer(email, host, user)
+        sendMailer(host, user)
             .then(result => {
                 res.json({
                     message: 'Success',
