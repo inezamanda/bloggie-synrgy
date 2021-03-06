@@ -5,12 +5,6 @@ const user = new UserController()
 authRoute.post(`/register`, async(req, res, next) => {
     try {
         const { email, password, username, fullName, about, interest } = req.body
-        // const email = req.body.email
-        // const password = req.body.password
-        // const username = req.body.username
-        // const fullName = req.body.fullName
-        // const about = req.body.about
-        // const interest = req.body.interest
         const image_profile = req.file ? req.file.path : undefined;
 
         const result = await user.register(email, password, username, fullName, image_profile, about, interest, 'user');

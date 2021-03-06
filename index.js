@@ -11,23 +11,19 @@ const passport = require('passport')
 const passportMiddleware = require(`./middleware/passportMiddleware`)
 // const restrict = passport.authenticate('jwt', { session: false })
 const authRoute = require(`./route/authRoute`)
-app.use(authRoute)
 
-app.use(express.urlencoded({extended : true}))
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
-// parse application/json
-app.use(bodyParser.json())
-app.set('view engine', 'ejs');
 app.use(express.json());
+app.use(express.urlencoded({extended : true}))
+app.set('view engine', 'ejs');
 app.use(express.static('views'));
 app.use(multer)
-app.use(passport.initialize()
-)
+app.use(passport.initialize())
 
 app.get('/', (req, res) => {
   res.render('index');
 });
+
+app.use(authRoute)
 
 const port = process.env.PORT;
 app.listen(port, () => {
