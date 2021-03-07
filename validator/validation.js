@@ -28,6 +28,25 @@ const commentValidation = Joi.object({
     .required()
 })
 
+const editCommentValidation = Joi.object({
+  content: Joi.string()
+    .trim()
+    .min(1)
+    .max(4000)
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/\//g, '&#x2F;')
+    .replace(/\\/g, '&#x5C;')
+    .replace(/`/g, '&#96;')
+    .replace(/\n+/g, '<br>')
+    .replace(/\s+/g, '&nbsp;')
+    .required()
+})
+
 module.exports = {
-  commentValidation
+  commentValidation,
+  editCommentValidation
 }

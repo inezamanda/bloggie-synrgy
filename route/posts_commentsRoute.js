@@ -1,7 +1,7 @@
 const express = require('express')
 const {ForeignKeyConstraintError} = require('sequelize')
 const PostsCommentsController = require('../controller/posts_commentsController')
-const {commentValidation} = require('../validator/validation')
+const {commentValidation, editCommentValidation} = require('../validator/validation')
 const {ValidationError} = require('joi')
 
 const postsComments = new PostsCommentsController()
@@ -19,7 +19,7 @@ app.post('/', async (req, res, next) => {
   } catch(error) {
     if (error instanceof ForeignKeyConstraintError){
       res.status(500).json({
-        error:{
+        error: {
           status: '500 Internal Server Error',
           message: `Something wrong, foreign key constraint doesn't match`
         }
@@ -69,7 +69,7 @@ app.get('/:id', async (req, res, next) => {
 app.put('/:id', async (req, res, next) => {
   try {
     const {body, params} = req
-    const result = await commentValidation.validateAsync(body)
+    const result = await editCommentValidation.validateAsync(body)
     const comment = await postsComments.edit(params.id, result)
     if(comment[0]){
       res.status(200).json({
