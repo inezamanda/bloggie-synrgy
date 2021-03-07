@@ -5,6 +5,18 @@ app.get('/', async (req, res) => {
   res.send("Welcome to Mini Project Team A")
 })
 
+app.post('/', async (req, res) => {
+  res.send("Welcome to Mini Project Team A")
+})
+
+app.put('/', async (req, res) => {
+  res.send("Welcome to Mini Project Team A")
+})
+
+app.delete('/', async (req, res) => {
+  res.send("Welcome to Mini Project Team A")
+})
+
 app.post('/:path', async (req, res) => {
   res.status(404).json({
     error: {

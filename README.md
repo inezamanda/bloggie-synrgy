@@ -209,7 +209,7 @@ git push origin feature/(feature-name)
 6. CRUD Comment<br>
    *Create Comment*<br>
    endpoint:
-   - `POST` `/api/comments`
+   - `POST` `/comment/`
 
    request example:
    ```json
@@ -241,8 +241,8 @@ git push origin feature/(feature-name)
    ```
    *Read Comment*<br>
    endpoint:
-   - `GET` `/api/comments`
-   - `GET` `/api/comments/:id`
+   - `GET` `/comment`
+   - `GET` `/comment/:id`
 
    success response example:
    ```json
@@ -268,7 +268,7 @@ git push origin feature/(feature-name)
    ```
    *Edit Comment*<br>
    endpoint:
-   - `PUT` `/api/comments/:id`
+   - `PUT` `/comment/:id`
 
    request example:
    ```json
@@ -292,7 +292,7 @@ git push origin feature/(feature-name)
    ```
    *Delete Comment*<br>
    endpoint: 
-   - `DELETE` `/api/comments/:id`
+   - `DELETE` `/comment/:id`
 
    success response example:
    ```json
