@@ -12,11 +12,11 @@ class UserController extends BaseController {
         super(Users)
     }
 
-    async register (email, password, username, fullName, image_profile, about, interest, role) {
+    async register (email, password, username, fullName, image_profile, about, interest, role, image_header, location, occupation) {
         const encryptedPassword = await bcrypt.hash(password,10)
         const id = nanoid()
         const payload = {
-            id, email, username, fullName, image_profile, about, interest, role
+            id, email, username, fullName, image_profile, about, interest, role, image_header, location, occupation
         }
         
         await Users.create({
