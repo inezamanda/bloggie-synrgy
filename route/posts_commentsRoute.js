@@ -34,7 +34,8 @@ app.get('/:id', async (req, res, next) => {
   if (comment) {
     res.status(200).json({
       status: '200 OK',
-      message: 'Read comments successful'
+      message: 'Read comments successful',
+      data: comment
     })
   } else{
     res.status(404).json({
