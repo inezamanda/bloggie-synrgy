@@ -1,6 +1,8 @@
 const express = require('express')
+const {ForeignKeyConstraintError} = require('sequelize')
 const PostsCommentsController = require('../controller/posts_commentsController')
 const {commentValidation} = require('../validator/validation')
+const {ValidationError} = require('joi')
 
 const postsComments = new PostsCommentsController()
 const app = express.Router()
@@ -15,7 +17,24 @@ app.post('/', async (req, res, next) => {
       data: comment
     })
   } catch(error) {
-    next(error)
+    if (error instanceof ForeignKeyConstraintError){
+      res.status(500).json({
+        error:{
+          status: '500 Internal Server Error',
+          message: `Something wrong, foreign key constraint doesn't match`
+        }
+      })
+    } else if (error instanceof ValidationError){
+      res.status(500).json({
+        error: {
+          status: '500 Internal Server Error',
+          message: `${error.details.map(err => err.message)}`
+        }
+      })
+    }
+    else{
+      next(error)
+    }
   }
 })
 
@@ -39,8 +58,10 @@ app.get('/:id', async (req, res, next) => {
     })
   } else{
     res.status(404).json({
-      status: '404 Not Found',
-      message: 'Comments not found'
+      error: {
+        status: '404 Not Found',
+        message: 'Comments not found'
+      }
     })
   }
 })
@@ -57,12 +78,31 @@ app.put('/:id', async (req, res, next) => {
       })
     } else {
       res.status(404).json({
-        status: '404 Not Found',
-        message: 'Comments not found'
+        error: {
+          status: '404 Not Found',
+          message: 'Comments not found'
+        }
       })
     }
   } catch(error) {
-    next(error)
+    if (error instanceof ForeignKeyConstraintError){
+      res.status(500).json({
+        error: {
+          status: '500 Internal Server Error',
+          message: `Something wrong, foreign key constraint doesn't match`
+        }
+      })
+    } else if (error instanceof ValidationError){
+      res.status(500).json({
+        error: {
+          status: '500 Internal Server Error',
+          message: `${error.details.map(err => err.message)}`
+        }
+      })
+    }
+    else{
+      next(error)
+    }
   }
 })
 
@@ -76,8 +116,10 @@ app.delete('/:id', async (req, res, next) => {
     })
   } else{
     res.status(404).json({
-      status: '404 Not Found',
-      message: 'Comments not found'
+      error: {
+        status: '404 Not Found',
+        message: 'Comments not found'
+      }
     })
   }
 })
