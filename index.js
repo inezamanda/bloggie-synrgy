@@ -11,7 +11,7 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
-app.use('/user', require('./route/resetPasswordRoute'))
+app.use('/post', require('./route/postRoute'))
 
 const port = process.env.PORT;
 app.listen(port, () => {
