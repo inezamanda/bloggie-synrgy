@@ -23,8 +23,10 @@ module.exports = (sequelize, DataTypes) => {
     about: DataTypes.TEXT,
     occupation: DataTypes.STRING,
     location: DataTypes.STRING,
+    role: DataTypes.ENUM('admin', 'user'),
     followers: DataTypes.STRING,
-    role: DataTypes.ENUM('admin', 'user')
+    createdAt: DataTypes.DATE,
+    updatedAt: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'Users',

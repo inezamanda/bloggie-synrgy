@@ -23,6 +23,7 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
+app.use('/users', require('./route/resetPasswordRoute'))
 app.use(authRoute)
 
 const port = process.env.PORT;
