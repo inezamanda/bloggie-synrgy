@@ -23,6 +23,7 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
+app.use('/post', require('./route/postRoute'))
 app.use('/users', require('./route/resetPasswordRoute'))
 app.use(authRoute)
 
