@@ -6,6 +6,16 @@ const path = require('path')
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {
         callback(null, path.join(__dirname, "../files"));
+        },
+    filename: (req, file, callback) => {
+        console.log(file);
+        callback(null, new Date().toString() + '-' + file.originalname);
+    }
+});
+
+const storageImage = multer.diskStorage({
+    destination: (req, file, callback) => {
+        callback(null, 'images');
     },
     filename: (req, file, callback) => {
         console.log(file);
@@ -21,6 +31,7 @@ const fileFilter = (req, file, callback) => {
     }
 }
 
-const upload = multer({ storage: storage, fileFilter: fileFilter })
+const upload = multer({ storage: storage, fileFilter: fileFilter });
+const uploadImage = multer({ storage: storage, fileFilter: fileFilter }).single('image_profile');
 
 module.exports = upload;
