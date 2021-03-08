@@ -8,12 +8,21 @@ module.exports = {
         type: Sequelize.STRING(21)
       },
       posts_id: {
-        type: Sequelize.STRING(21)
+        type: Sequelize.STRING(21),
+        references: {
+          model: 'Posts',
+          key: 'id'
+        }
       },
       users_id: {
-        type: Sequelize.STRING(21)
+        type: Sequelize.STRING(21),
+        references: {
+          model: 'Users',
+          key: 'id'
+        }
       },
       content: {
+        allowNull: false,
         type: Sequelize.TEXT
       },
       createdAt: {

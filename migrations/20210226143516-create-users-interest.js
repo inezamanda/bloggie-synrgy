@@ -8,10 +8,18 @@ module.exports = {
         type: Sequelize.STRING(21)
       },
       users_id: {
-        type: Sequelize.STRING(21)
+        type: Sequelize.STRING(21),
+        references: {
+          model: 'Users',
+          key: 'id'
+        }
       },
       categories_id: {
-        type: Sequelize.STRING(21)
+        type: Sequelize.STRING(21),
+        references: {
+          model: 'Categories',
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,

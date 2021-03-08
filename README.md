@@ -95,63 +95,223 @@ git push origin feature/(feature-name)
 
 ## API Spec
 1. Feature signup<br>
-   endpoint ‘/signup’<br> 
-   request: 
+   endpoint:
+   - `POST` `/signup`
+
+   request example:
+   ```json
+   {
+     "email": "sherlockholmes@gmail.com",
+     "password": "1234567890",
+     "username": "sherlockholmes",
+     "fullName": "Sherlock Holmes",
+     "image_profile": "profile.jpg",
+     "image_header": "header.jpg",
+     "about": "Hi, it's me.",
+     "occupation": "Web Developer",
+     "location": "Indonesia",
+     "role": "User",
+   }
    ```
-	{
-		“id” : nano id,
-		“email” : ‘ ‘,
-		“password”: ‘ ‘,
-		“username” : ‘ ‘,
-		“fullname” : ‘ ‘,
-		“image” : ‘ ‘,
-		“bio” : ‘ ‘,
-		“occupation” : ‘ ‘,
-		“location” : ‘ ‘,
-		“role” : ‘ ‘
-	}
-    ```
-	response:
-    ```
-	{
-		“status” : ‘200 Ok’
-		“message” : ‘User has been register’,
-		“data” : {
-					“id” : nano id,
-					“email” : ‘ ‘,
-					“username” : ‘ ‘
-				}
-	}
-    ```
+   success response example:
+   ```json
+   {
+     "status": "200 OK",
+     "message": "User has been register",
+     "data":{
+       "id": "EqpcETTeyVJqTI7ReTL9Z",
+       "email": "sherlockholmes@gmail.com",
+       "username": "sherlockholmes",
+       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkVxcGNFVFRleVZKcVRJN1JlVEw5WiIsImlhdCI6MTYxNDQ4OTk0Nn0.-cZuPQQ2N4kQkAGtZJk0WTXHRmNYymaqdL2wIRmLiFc"
+     }
+   }
+   ```
+   error response example:
+   ```json
+   {
+     "status": "409 Conflict",
+     "message": "Username/Email already exists"
+   }
+   ```
 2. Feature Login<br>
-   endpoint ‘/login’ <br>
-   request:
+   endpoint:
+   - `POST` `/signup`
+
+   request example:
+   ```json
+   {
+     "email": "sherlockholmes@gmail.com",
+     "password": "1234567890"
+   }
    ```
-	{
-		“email” : ‘ ‘,
-		“password”: ‘ ‘
-	}
-    ```
-	response:
-    ```
-	{
-		“status” : ‘200 Ok’
-		“message” : ‘Login successful’,
-		“data” : {
-					“id” : ‘ ’,
-					“email” : ‘ ‘,
-					“username” : ‘ ‘
-				}
-	}
-    ```
-3. CRUD User <br>
-   endpoint ‘/users’ atau ‘/users/:id’
+   success response example:
+   ```json
+   {
+     "status": "200 OK",
+     "message": "Login successful",
+     "data":{
+       "id": "EqpcETTeyVJqTI7ReTL9Z",
+       "email": "sherlockholmes@gmail.com",
+       "username": "sherlockholmes",
+       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkVxcGNFVFRleVZKcVRJN1JlVEw5WiIsImlhdCI6MTYxNDQ4OTk0Nn0.-cZuPQQ2N4kQkAGtZJk0WTXHRmNYymaqdL2wIRmLiFc"
+     }
+   }
+   ```
+   error response example:
+   ```json
+   {
+     "status": "401 Unauthorized",
+     "message": "Email/Password incorrect"
+   }
+   ```
+3. CRUD User<br>
+   *Create User*<br>
+   endpoint:
+   - `POST` `/users`
+
+   request example:
+   ```json
+   {
+     "email": "sherlockholmes@gmail.com",
+     "password": "1234567890",
+     "username": "sherlockholmes",
+     "fullName": "Sherlock Holmes",
+     "image_profile": "profile.jpg",
+     "image_header": "header.jpg",
+     "about": "Hi, it's me.",
+     "occupation": "Web Developer",
+     "location": "Indonesia",
+     "role": "User",
+   }
+   ```
+   success response example:
+   ```json
+   {
+     "status": "200 OK",
+     "message": "User has been register",
+     "data":{
+       "id": "EqpcETTeyVJqTI7ReTL9Z",
+       "email": "sherlockholmes@gmail.com",
+       "username": "sherlockholmes",
+       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IkVxcGNFVFRleVZKcVRJN1JlVEw5WiIsImlhdCI6MTYxNDQ4OTk0Nn0.-cZuPQQ2N4kQkAGtZJk0WTXHRmNYymaqdL2wIRmLiFc"
+     }
+   }
+   ```
+   error response example:
+   ```json
+   {
+     "status": "409 Conflict",
+     "message": "Username/Email already exists"
+   }
+   ```   
 4. CRUD Post
 5. CRUD Category
-6. CRUD Comment
+6. CRUD Comment<br>
+   *Create Comment*<br>
+   endpoint:
+   - `POST` `/comment/`
+
+   request example:
+   ```json
+   {
+     "content": "i have no idea."
+   }
+   ```
+   success response example:
+   ```json
+   {
+     "status": "200 OK",
+     "message": "Add Comments successful",
+     "data":{
+       "id": "U1g-lBI6BHhgHu5IfAC2I",
+       "posts_id": "o19vozmrZ_yVBa6hV_g0Q",
+       "users_id": "EqpcETTeyVJqTI7ReTL9Z",
+       "content": "i have no idea.",
+       "createdAt": "2021-02-27T10:11:40.406Z",
+       "updatedAt": "2021-02-27T10:11:40.406Z"
+     }
+   }
+   ```
+   error response example:
+   ```json
+   {
+     "status": "403 Forbidden",
+     "message": "You need to login first"
+   }
+   ```
+   *Read Comment*<br>
+   endpoint:
+   - `GET` `/comment`
+   - `GET` `/comment/:id`
+
+   success response example:
+   ```json
+   {
+     "status": "200 OK",
+     "message": "Read comments successful",
+     "data":{
+       "id": "U1g-lBI6BHhgHu5IfAC2I",
+       "posts_id": "o19vozmrZ_yVBa6hV_g0Q",
+       "users_id": "EqpcETTeyVJqTI7ReTL9Z",
+       "content": "i have no idea.",
+       "createdAt": "2021-02-27T10:11:40.406Z",
+       "updatedAt": "2021-02-27T10:11:40.406Z"
+     }
+   }
+   ```
+   error response example:
+   ```json
+   {
+     "status": "404 Not Found",
+     "message": "Comments not found"
+   }
+   ```
+   *Edit Comment*<br>
+   endpoint:
+   - `PUT` `/comment/:id`
+
+   request example:
+   ```json
+   {
+     "content": "i have idea."
+   }
+   ```
+   success response example:
+   ```json
+   {
+     "status": "200 OK",
+     "message": "Edit comments successful"
+   }
+   ```
+   error response example:
+   ```json
+   {
+     "status": "400 Bad Request",
+     "message": "Comments can't be empty"
+   }
+   ```
+   *Delete Comment*<br>
+   endpoint: 
+   - `DELETE` `/comment/:id`
+
+   success response example:
+   ```json
+   {
+     "status": "200 OK",
+     "message": "Delete comments successful"
+   }
+   ```
+   error response example:
+   ```json
+   {
+     "status": "404 Not Found",
+     "message": "Comments not found"
+   }
+   ```
+
 7. GET Saved Post 
 8. GET Search Post Title/User
-9. GET Post by Category
+9.  GET Post by Category
 10. GET Post by (latest activity)
 11. GET Users by Following’s Followers (suggestion)
 12. GET Post by Active User
