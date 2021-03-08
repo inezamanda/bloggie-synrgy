@@ -1,6 +1,10 @@
+// const { Users } = require('../models/users')
+
+//const userAdminRoute = require("../route/userAdminRoute");
+
 const isAdmin = async(req, res, next) => {
-    const { Users } = req
-    if (Users.role !== 'admin') {
+    const { user } = req
+    if (user.role !== 'admin') {
         res.status(403).json({
             status : '403',
             success : false,

@@ -1,15 +1,13 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
-var bodyParser = require('body-parser')
 
 // setting multer
 // const multer = require(`./middleware/multerMiddleware`);
 // setting passport
 const passport = require('passport')
-const passportMiddleware = require(`./middleware/passportMiddleware`)
-// const restrict = passport.authenticate('jwt', { session: false })
 const authRoute = require(`./route/authRoute`)
+const userAdminRoute = require(`./route/userAdminRoute`)
 const fs = require('fs')
 // kodingan untuk membuat folder "images" secara otomatis
 if (!fs.existsSync('images')){ 
@@ -32,6 +30,7 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
+
 app.use("/", (req, res, next) => {
   res.status("404").json({
     error: {
@@ -40,6 +39,10 @@ app.use("/", (req, res, next) => {
     } 
   })
 })
+
+app.use(authRoute)
+app.use(userAdminRoute)
+
 
 const port = process.env.PORT;
 app.listen(port, () => {
