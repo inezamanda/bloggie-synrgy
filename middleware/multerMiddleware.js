@@ -1,19 +1,21 @@
 require('dotenv').config();
 
 const multer = require(`multer`);
-const path = require('path')
+// const path = require('path')
 
+// yanuar
+// const storage = multer.diskStorage({
+//     destination: (req, file, callback) => {
+//         callback(null, path.join(__dirname, "../files"));
+//         },
+//     filename: (req, file, callback) => {
+//         console.log(file);
+//         callback(null, new Date().toString() + '-' + file.originalname);
+//     }
+// });
+
+// inez
 const storage = multer.diskStorage({
-    destination: (req, file, callback) => {
-        callback(null, path.join(__dirname, "../files"));
-        },
-    filename: (req, file, callback) => {
-        console.log(file);
-        callback(null, new Date().toString() + '-' + file.originalname);
-    }
-});
-
-const storageImage = multer.diskStorage({
     destination: (req, file, callback) => {
         callback(null, 'images');
     },
@@ -32,6 +34,5 @@ const fileFilter = (req, file, callback) => {
 }
 
 const upload = multer({ storage: storage, fileFilter: fileFilter });
-const uploadImage = multer({ storage: storage, fileFilter: fileFilter }).single('image_profile');
 
 module.exports = upload;
