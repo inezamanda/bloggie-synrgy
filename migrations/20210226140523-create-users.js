@@ -5,21 +5,24 @@ module.exports = {
       id: {
         allowNull: false,
         primaryKey: true,
-        type: Sequelize.STRING(21)
+        type: Sequelize.STRING
       },
       email: {
         allowNull: false,
-        type: Sequelize.STRING(30)
+        type: Sequelize.STRING,
+        unique: true
       },
       password: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       username: {
         allowNull: false,
-        type: Sequelize.STRING(30)
+        type: Sequelize.STRING,
+        unique: true
       },
       fullName: {
+        allowNull: false,
         type: Sequelize.STRING(100)
       },
       image_profile: {
@@ -38,12 +41,11 @@ module.exports = {
         type: Sequelize.STRING
       },
       role: {
-        type: Sequelize.ENUM({
-          values: ['User', 'Admin']
-        })
+        allowNull: false,
+        type: Sequelize.ENUM('admin', 'user')
       },
-      followers_id: {
-        type: Sequelize.STRING(21)
+      followers: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

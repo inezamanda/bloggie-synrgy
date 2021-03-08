@@ -25,6 +25,8 @@ module.exports = (sequelize, DataTypes) => {
     filterView: DataTypes.STRING,
     filterComment: DataTypes.STRING,
     isReported: DataTypes.BOOLEAN,
+    createdAt: DataTypes.DATE,
+    updatedAt: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'Posts',
