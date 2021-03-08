@@ -11,6 +11,12 @@ const passport = require('passport')
 const passportMiddleware = require(`./middleware/passportMiddleware`)
 // const restrict = passport.authenticate('jwt', { session: false })
 const authRoute = require(`./route/authRoute`)
+const fs = require('fs')
+// kodingan untuk membuat folder "images" secara otomatis
+if (!fs.existsSync('images')){ 
+  fs.mkdirSync('images')
+}
+
 
 app.use(express.json());
 app.use(express.urlencoded({extended : true}))
