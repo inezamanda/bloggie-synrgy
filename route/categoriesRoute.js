@@ -1,9 +1,9 @@
 const express = require('express')
 const CategoriesController = require('../controller/categoriesController')
-const {categoryValidation} = require('../validator/validation')
+const {categoryValidation, editCategoryValidation} = require('../validator/validation')
 const upload = require('../middleware/multerMiddleware')
 const {ValidationError} = require('joi')
-const {ForeignKeyConstraintError, DatabaseError} = require('sequelize')
+const {DatabaseError} = require('sequelize')
 
 const categories = new CategoriesController()
 const app = express.Router()
@@ -23,14 +23,7 @@ app.post('/', upload.single('icon'), async (req, res, next) => {
       data: category
     })
   } catch(error) {
-    if (error instanceof ForeignKeyConstraintError){
-      res.status(500).json({
-        error: {
-          status: '500 Internal Server Error',
-          message: `Something wrong, foreign key constraint doesn't match`
-        }
-      })
-    } else if (error instanceof ValidationError){
+    if (error instanceof ValidationError){
       res.status(500).json({
         error: {
           status: '500 Internal Server Error',
@@ -72,7 +65,7 @@ app.get('/:id', async (req, res, next) => {
   } else{
     res.status(404).json({
       status: '404 Not Found',
-      message: 'categories not found'
+      message: 'Categories not found'
     })
   }
 })
@@ -80,51 +73,35 @@ app.get('/:id', async (req, res, next) => {
 app.put('/:id', upload.single('icon'), async (req, res, next) => {
   try {
     const {body, params} = req
-    const result = await categoryValidation.validateAsync(body)
+    const result = await editCategoryValidation.validateAsync(body)
     const {name} = result
     const icon = req.file ? req.file.path : undefined;
     const category = await categories.edit(params.id, {
       name,
       icon
     })
-    res.send(category)
     if(category[0]){
       res.status(200).json({
         status: '200 OK',
         message: 'Edit categories successful'
       })
     } else {
-      res.status(404).json({
+      res.status(400).json({
         error: {
-          status: '404 Not Found',
-          message: 'categories not found'
+          status: '400 Bad Request',
+          message: `Categories could not be edited. Please check categories id or your input`
         }
       })
     }
   } catch(error) {
-    if (error instanceof ForeignKeyConstraintError){
-      res.status(500).json({
-        error: {
-          status: '500 Internal Server Error',
-          message: `Something wrong, foreign key constraint doesn't match`
-        }
-      })
-    } else if (error instanceof ValidationError){
+    if (error instanceof ValidationError){
       res.status(500).json({
         error: {
           status: '500 Internal Server Error',
           message: `${error.details.map(err => err.message)}`
         }
       })
-    } else if (error instanceof DatabaseError) {
-      res.status(500).json({
-        error: {
-          status: '500 Internal Server Error',
-          message: `Something went wrong, icon can't be empty or file must be .png, .jpg, .jpeg format`
-        }
-      })
-    }
-    else{
+    } else{
       next(error)
     }
   }
@@ -141,7 +118,7 @@ app.delete('/:id', async (req, res, next) => {
   } else{
     res.status(404).json({
       status: '404 Not Found',
-      message: 'categories not found'
+      message: 'Categories not found'
     })
   }
 })
