@@ -6,22 +6,23 @@ const passport = require('../middleware/passportMiddleware')
 const restrict = passport.authenticate('jwt', { session: false })
 const isAdmin = require('../middleware/isAdmin')
 
-userAdminRoute.post('/register/admin', upload.single('uploaded'), async(req, res, next) => {
-    try {
-        const { email, password, username, fullName, about, interest, location, occupation } = req.body
-        const image_profile = req.file ? req.file.path : undefined;
-        const image_header = req.file ? req.file.path : undefined;
-        const result = await user.register(email, password, username, fullName, image_profile, about, interest, 'admin', image_header, location, occupation);
-        res.json({
-            status : '201 Created',
-            success : true,
-            message : `Register success`,
-            data : {result}
-         });
-    } catch (error) {
-        next(error)
-    };
-})
+// To create new admin ( mempermudah buat testing saja)
+// userAdminRoute.post('/register/admin', upload.single('uploaded'), async(req, res, next) => {
+//     try {
+//         const { email, password, username, fullName, about, interest, location, occupation } = req.body
+//         const image_profile = req.file ? req.file.path : undefined;
+//         const image_header = req.file ? req.file.path : undefined;
+//         const result = await user.register(email, password, username, fullName, image_profile, about, interest, 'Admin', image_header, location, occupation);
+//         res.json({
+//             status : '201 Created',
+//             success : true,
+//             message : `Register success`,
+//             data : {result}
+//          });
+//     } catch (error) {
+//         next(error)
+//     };
+// })
 
 userAdminRoute.get('/list-of-user', restrict, isAdmin, upload.single('uploaded'), async(req, res, next) => {
     try {
@@ -59,7 +60,7 @@ userAdminRoute.post('/create/user', restrict, isAdmin, upload.single('uploaded')
         const { email, password, username, fullName, about, interest, location, occupation } = req.body
         const image_profile = req.file ? req.file.path : undefined;
         const image_header = req.file ? req.file.path : undefined;
-        const result = await user.register(email, password, username, fullName, image_profile, about, interest, 'user', image_header, location, occupation);
+        const result = await user.register(email, password, username, fullName, image_profile, about, interest, 'User', image_header, location, occupation);
         res.json({
             status : '201 Created',
             success : true,
@@ -76,7 +77,7 @@ userAdminRoute.post('/create/admin', restrict, isAdmin, upload.single('uploaded'
         const { email, password, username, fullName, about, interest, location, occupation } = req.body
         const image_profile = req.file ? req.file.path : undefined;
         const image_header = req.file ? req.file.path : undefined;
-        const result = await user.register(email, password, username, fullName, image_profile, about, interest, 'admin', image_header, location, occupation);
+        const result = await user.register(email, password, username, fullName, image_profile, about, interest, 'Admin', image_header, location, occupation);
         res.json({
             status : '201 Created',
             success : true,
@@ -94,15 +95,15 @@ userAdminRoute.put('/user/:id', restrict, isAdmin, upload.single('uploaded'), as
             id
         } = req.params;
         const {
-            fullName, about, email, location
+            username, fullName, about, email, location, role
         } = req.body
         const image_profile = req.file ? req.file.path : undefined;
         const image_header = req.file ? req.file.path : undefined;
-        const result = await user.edit(id, { image_profile, fullName, username, about, email, location, image_header});
+        const result = await user.edit(id, { username, image_profile, fullName, username, about, email, location, image_header, role });
         res.status(201).json({
             status : '201 Update',
             success : true,
-            message : `Updated username = '${id}' successfully`,
+            message : `Updated account with id = '${id}' successfully`,
             data : result
         });
     } catch (error) {
@@ -115,13 +116,11 @@ userAdminRoute.delete('/user/:id', restrict, isAdmin, upload.single('uploaded'),
         const {
             id
         } = req.params;
-        const image_profile = req.file ? req.file.path : undefined;
-        const image_header = req.file ? req.file.path : undefined;
         await user.remove(id)
         res.status(200).json({
             status : '200 Ok',
             success : true,
-            message : `Delete account = '${id}' successfully`,
+            message : `Delete account with id = '${id}' successfully`,
         });
     } catch (error) {
         next(error)

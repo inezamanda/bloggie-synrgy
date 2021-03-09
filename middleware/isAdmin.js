@@ -4,7 +4,7 @@
 
 const isAdmin = async(req, res, next) => {
     const { user } = req
-    if (user.role !== 'admin') {
+    if (user.role !== 'Admin') {
         res.status(403).json({
             status : '403',
             success : false,

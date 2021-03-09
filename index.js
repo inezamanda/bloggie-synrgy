@@ -20,10 +20,11 @@ app.use(express.urlencoded({extended : true}))
 app.use(express.static('views'));
 // app.use(multer)
 app.use(passport.initialize())
+app.use(authRoute)
+app.use(userAdminRoute)
 app.use('/comment', require('./route/posts_commentsRoute'))
 app.use('/post', require('./route/postRoute'))
 app.use('/users', require('./route/resetPasswordRoute'))
-app.use(authRoute)
 app.use('/', require('./route/indexRoute'))
 
 app.get('/', (req, res) => {
@@ -40,8 +41,6 @@ app.use("/", (req, res, next) => {
   })
 })
 
-app.use(authRoute)
-app.use(userAdminRoute)
 
 
 const port = process.env.PORT;
