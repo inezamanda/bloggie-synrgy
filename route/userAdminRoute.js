@@ -7,22 +7,22 @@ const restrict = passport.authenticate('jwt', { session: false })
 const isAdmin = require('../middleware/isAdmin')
 
 // To create new admin ( mempermudah buat testing saja)
-// userAdminRoute.post('/register/admin', upload.single('uploaded'), async(req, res, next) => {
-//     try {
-//         const { email, password, username, fullName, about, interest, location, occupation } = req.body
-//         const image_profile = req.file ? req.file.path : undefined;
-//         const image_header = req.file ? req.file.path : undefined;
-//         const result = await user.register(email, password, username, fullName, image_profile, about, interest, 'Admin', image_header, location, occupation);
-//         res.json({
-//             status : '201 Created',
-//             success : true,
-//             message : `Register success`,
-//             data : {result}
-//          });
-//     } catch (error) {
-//         next(error)
-//     };
-// })
+userAdminRoute.post('/register/admin', upload.single('uploaded'), async(req, res, next) => {
+    try {
+        const { email, password, username, fullName, about, interest, location, occupation } = req.body
+        const image_profile = req.file ? req.file.path : undefined;
+        const image_header = req.file ? req.file.path : undefined;
+        const result = await user.register(email, password, username, fullName, image_profile, about, interest, 'Admin', image_header, location, occupation);
+        res.json({
+            status : '201 Created',
+            success : true,
+            message : `Register success`,
+            data : {result}
+         });
+    } catch (error) {
+        next(error)
+    };
+})
 
 userAdminRoute.get('/list-of-user', restrict, isAdmin, upload.single('uploaded'), async(req, res, next) => {
     try {

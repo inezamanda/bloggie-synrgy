@@ -9,7 +9,6 @@ authRoute.post(`/register`, upload.single('uploaded'), async(req, res, next) => 
         const image_profile = req.file ? req.file.path : undefined;
         const image_header = req.file ? req.file.path : undefined;
         const result = await user.register(email, password, username, fullName, image_profile, about, interest, 'User', image_header, location, occupation);
-        
         res.json({
             status : '201 Created',
             success : true,
