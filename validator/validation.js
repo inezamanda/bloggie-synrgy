@@ -46,7 +46,14 @@ const editCommentValidation = Joi.object({
     .required()
 })
 
+const categoryValidation = Joi.object({
+  name: Joi.string()
+    .trim()
+    .pattern(/^[a-zA-Z]+$/)
+})
+
 module.exports = {
   commentValidation,
-  editCommentValidation
+  editCommentValidation,
+  categoryValidation
 }
