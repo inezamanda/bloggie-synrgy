@@ -31,9 +31,23 @@ class BaseController {
     )
   }
 
+  editByQuery(query, data){
+    return this.model.update(
+      data, {
+        where: query
+      }
+    )
+  }
+
   remove(id){
     return this.model.destroy(
       {where: {id}}
+    )
+  }
+
+  removeByQuery(query){
+    return this.model.destroy(
+      {where: query}
     )
   }
 }

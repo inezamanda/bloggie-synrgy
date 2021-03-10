@@ -7,24 +7,24 @@ const restrict = passport.authenticate('jwt', { session: false })
 const isAdmin = require('../middleware/isAdmin')
 
 // To create new admin ( mempermudah buat testing saja)
-userAdminRoute.post('/register/admin', upload.single('uploaded'), async(req, res, next) => {
-    try {
-        const { email, password, username, fullName, about, interest, location, occupation } = req.body
-        const image_profile = req.file ? req.file.path : undefined;
-        const image_header = req.file ? req.file.path : undefined;
-        const result = await user.register(email, password, username, fullName, image_profile, about, interest, 'Admin', image_header, location, occupation);
-        res.json({
-            status : '201 Created',
-            success : true,
-            message : `Register success`,
-            data : {result}
-         });
-    } catch (error) {
-        next(error)
-    };
-})
+// userAdminRoute.post('/register/admin', upload.single('image_profile'), upload.single('image_header'), async(req, res, next) => {
+//     try {
+//         const { email, password, username, fullName, about, interest, location, occupation } = req.body
+//         const image_profile = req.file ? req.file.path : undefined;
+//         const image_header = req.file ? req.file.path : undefined;
+//         const result = await user.register(email, password, username, fullName, image_profile, about, interest, 'Admin', image_header, location, occupation);
+//         res.json({
+//             status : '201 Created',
+//             success : true,
+//             message : `Register success`,
+//             data : {result}
+//          });
+//     } catch (error) {
+//         next(error)
+//     };
+// })
 
-userAdminRoute.get('/list-of-user', restrict, isAdmin, upload.single('uploaded'), async(req, res, next) => {
+userAdminRoute.get('/list-of-user', restrict, isAdmin, upload.single('image_profile'), upload.single('image_header'), async(req, res, next) => {
     try {
         const result = await user.get();
         res.status(200).json({
@@ -38,11 +38,9 @@ userAdminRoute.get('/list-of-user', restrict, isAdmin, upload.single('uploaded')
     };
 })
 
-userAdminRoute.get('/user/:username', restrict, isAdmin, upload.single('uploaded'), async(req, res, next) => {
+userAdminRoute.get('/user/:username', restrict, isAdmin, async(req, res, next) => {
     try {
-        const {
-            username
-        } = req.params;
+        const { username } = req.params;
         const result = await user.get({ username });
         res.status(200).json({
             status : '200 Found',
@@ -55,7 +53,7 @@ userAdminRoute.get('/user/:username', restrict, isAdmin, upload.single('uploaded
     };
 })
 
-userAdminRoute.post('/create/user', restrict, isAdmin, upload.single('uploaded'), async(req, res, next) => {
+userAdminRoute.post('/create/user', restrict, isAdmin, upload.single('image_profile'), upload.single('image_header'), async(req, res, next) => {
     try {
         const { email, password, username, fullName, about, interest, location, occupation } = req.body
         const image_profile = req.file ? req.file.path : undefined;
@@ -72,7 +70,7 @@ userAdminRoute.post('/create/user', restrict, isAdmin, upload.single('uploaded')
     };
 })
 
-userAdminRoute.post('/create/admin', restrict, isAdmin, upload.single('uploaded'), async(req, res, next) => {
+userAdminRoute.post('/create/admin', restrict, isAdmin, upload.single('image_profile'), upload.single('image_header'), async(req, res, next) => {
     try {
         const { email, password, username, fullName, about, interest, location, occupation } = req.body
         const image_profile = req.file ? req.file.path : undefined;
@@ -89,14 +87,10 @@ userAdminRoute.post('/create/admin', restrict, isAdmin, upload.single('uploaded'
     };
 })
 
-userAdminRoute.put('/user/:id', restrict, isAdmin, upload.single('uploaded'), async(req, res, next) => {
+userAdminRoute.put('/user/:id', restrict, isAdmin, upload.single('image_profile'), upload.single('image_header'), async(req, res, next) => {
     try {
-        const {
-            id
-        } = req.params;
-        const {
-            username, fullName, about, email, location, role
-        } = req.body
+        const { id } = req.params;
+        const { username, fullName, about, email, location, role } = req.body
         const image_profile = req.file ? req.file.path : undefined;
         const image_header = req.file ? req.file.path : undefined;
         const result = await user.edit(id, { username, image_profile, fullName, username, about, email, location, image_header, role });
@@ -113,9 +107,7 @@ userAdminRoute.put('/user/:id', restrict, isAdmin, upload.single('uploaded'), as
 
 userAdminRoute.delete('/user/:id', restrict, isAdmin, upload.single('uploaded'), async(req, res, next) => {
     try {
-        const {
-            id
-        } = req.params;
+        const { id } = req.params;
         await user.remove(id)
         res.status(200).json({
             status : '200 Ok',

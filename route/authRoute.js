@@ -3,7 +3,7 @@ const UserController = require('../controller/userController');
 const user = new UserController()
 const upload = require('../middleware/multerMiddleware')
 
-authRoute.post(`/register`, upload.single('uploaded'), async(req, res, next) => {
+authRoute.post(`/register`, upload.single('image_profile'), upload.single('image_header'), async(req, res, next) => {
     try {
         const { email, password, username, fullName, about, interest, location, occupation } = req.body
         const image_profile = req.file ? req.file.path : undefined;
@@ -22,10 +22,7 @@ authRoute.post(`/register`, upload.single('uploaded'), async(req, res, next) => 
 
 authRoute.post(`/login`, async(req, res, next) => {
     try {
-        const {
-            email, 
-            password
-        } = req.body;
+        const { email, password } = req.body;
         const result = await user.login(email, password);
         res.json({
             status : '302 Found',
