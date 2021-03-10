@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       Users.hasMany(models.Posts_likes, {foreignKey: 'users_id'})
       Users.hasMany(models.Posts_saved, {foreignKey: 'users_id'})
       Users.hasMany(models.Followers, {foreignKey: 'users_id'})
-      Users.hasOne(models.Followers, {foreignKey: 'id'})
+      Users.hasMany(models.Followers, {foreignKey: 'followers_id'})
       Users.belongsToMany(models.Categories, {through: 'Users_interest'})
     }
   };
@@ -29,7 +29,10 @@ module.exports = (sequelize, DataTypes) => {
     about: DataTypes.TEXT,
     occupation: DataTypes.STRING,
     location: DataTypes.STRING,
-    role: DataTypes.STRING,
+    role: {
+      type: DataTypes.STRING,
+      defaultValue: DataTypes.ENUM('User')
+    },
     followers_id: DataTypes.STRING
   }, {
     sequelize,

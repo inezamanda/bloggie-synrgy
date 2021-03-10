@@ -26,17 +26,16 @@ module.exports = {
         type: Sequelize.STRING
       },
       filterView: {
+        allowNull: false,
         type: Sequelize.ENUM({
           values: ['Anyone', 'Followers']
         })
       },
       filterComment: {
+        allowNull: false,
         type: Sequelize.ENUM({
           values: ['Anyone', 'Followers', 'None']
         })
-      },
-      isReported: {
-        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,
