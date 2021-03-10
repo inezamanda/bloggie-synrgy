@@ -35,7 +35,7 @@ userRoute.put(`/edit`, restrict, upload.single('image_profile'), upload.single('
         const { username, fullName, about, email, location } = req.body
         const image_profile = req.file ? req.file.path : undefined;
         const image_header = req.file ? req.file.path : undefined;
-        const result = await user.editByQuery({id}, { image_profile, fullName, username, about, email, location, image_header});
+        const result = await user.edit(id, { image_profile, fullName, username, about, email, location, image_header});
         res.status(201).json({
             status : '201 Update',
             success : true,
@@ -51,7 +51,7 @@ userRoute.put(`/edit`, restrict, upload.single('image_profile'), upload.single('
 userRoute.delete('/delete', restrict, async (req, res, next) => {
     try {
         const id = req.user.id
-        await user.removeByQuery({id})
+        await user.remove(id)
         res.status(200).json({
             status : '200 Ok',
             success : true,
