@@ -13,9 +13,9 @@ for (let index = 0; index < 7; index++) {
     username: faker.internet.userName(),
     fullName: faker.name.findName(),
     image_profile: faker.image.avatar(),
-    image_header: faker.image.nature(),
     about: faker.lorem.lines(),
     occupation: faker.name.jobTitle(),
+    location: faker.address.state(),
     role: 'User',
     createdAt: new Date(),
     updatedAt: new Date()
