@@ -23,6 +23,7 @@ app.use(express.static('views'));
 // app.use(multer)
 app.use(passport.initialize())
 app.use('/comment', require('./route/posts_commentsRoute'))
+app.use('/category', require('./route/categoriesRoute'))
 app.use('/post', require('./route/postRoute'))
 app.use('/users', require('./route/resetPasswordRoute'))
 app.use(authRoute)
