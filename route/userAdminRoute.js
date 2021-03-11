@@ -24,7 +24,7 @@ const isAdmin = require('../middleware/isAdmin')
 //     };
 // })
 
-userAdminRoute.get('/list-of-user', restrict, isAdmin, upload.single('image_profile'), upload.single('image_header'), async(req, res, next) => {
+userAdminRoute.get('/list-of-user', restrict, isAdmin, async(req, res, next) => {
     try {
         const result = await user.get();
         res.status(200).json({
@@ -53,12 +53,12 @@ userAdminRoute.get('/user/:username', restrict, isAdmin, async(req, res, next) =
     };
 })
 
-userAdminRoute.post('/create/user', restrict, isAdmin, upload.single('image_profile'), upload.single('image_header'), async(req, res, next) => {
+userAdminRoute.post('/create/user', restrict, isAdmin, upload.single('imageProfile'), upload.single('imageHeader'), async(req, res, next) => {
     try {
         const { email, password, username, fullName, about, interest, location, occupation } = req.body
-        const image_profile = req.file ? req.file.path : undefined;
-        const image_header = req.file ? req.file.path : undefined;
-        const result = await user.register(email, password, username, fullName, image_profile, about, interest, 'User', image_header, location, occupation);
+        const imageProfile = req.file ? req.file.path : undefined;
+        const imageHeader = req.file ? req.file.path : undefined;
+        const result = await user.register(email, password, username, fullName, imageProfile, about, interest, 'User', imageHeader, location, occupation);
         res.json({
             status : '201 Created',
             success : true,
@@ -70,12 +70,12 @@ userAdminRoute.post('/create/user', restrict, isAdmin, upload.single('image_prof
     };
 })
 
-userAdminRoute.post('/create/admin', restrict, isAdmin, upload.single('image_profile'), upload.single('image_header'), async(req, res, next) => {
+userAdminRoute.post('/create/admin', restrict, isAdmin, upload.single('imageProfile'), upload.single('imageHeader'), async(req, res, next) => {
     try {
         const { email, password, username, fullName, about, interest, location, occupation } = req.body
-        const image_profile = req.file ? req.file.path : undefined;
-        const image_header = req.file ? req.file.path : undefined;
-        const result = await user.register(email, password, username, fullName, image_profile, about, interest, 'Admin', image_header, location, occupation);
+        const imageProfile = req.file ? req.file.path : undefined;
+        const imageHeader = req.file ? req.file.path : undefined;
+        const result = await user.register(email, password, username, fullName, imageProfile, about, interest, 'Admin', imageHeader, location, occupation);
         res.json({
             status : '201 Created',
             success : true,
@@ -87,13 +87,13 @@ userAdminRoute.post('/create/admin', restrict, isAdmin, upload.single('image_pro
     };
 })
 
-userAdminRoute.put('/user/:id', restrict, isAdmin, upload.single('image_profile'), upload.single('image_header'), async(req, res, next) => {
+userAdminRoute.put('/user/:id', restrict, isAdmin, upload.single('imageProfile'), upload.single('imageHeader'), async(req, res, next) => {
     try {
         const { id } = req.params;
         const { username, fullName, about, email, location, role } = req.body
-        const image_profile = req.file ? req.file.path : undefined;
-        const image_header = req.file ? req.file.path : undefined;
-        const result = await user.edit(id, { username, image_profile, fullName, username, about, email, location, image_header, role });
+        const imageProfile = req.file ? req.file.path : undefined;
+        const imageHeader = req.file ? req.file.path : undefined;
+        const result = await user.edit(id, { username, imageProfile, fullName, username, about, email, location, imageHeader, role });
         res.status(201).json({
             status : '201 Update',
             success : true,
