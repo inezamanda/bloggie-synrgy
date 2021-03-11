@@ -1,8 +1,7 @@
 const express = require('express')
 const postController = require('../controller/postController')
 const upload = require('../middleware/multerMiddleware')
-const passport = require('passport')
-const restrict = passport.authenticate('jwt', { session: false })
+const restrict = require('../middleware/passportMiddleware')
 
 const app = express.Router()
 
@@ -33,18 +32,19 @@ app.get('/:id', async (req, res, next) => {
   }
 })
 
-app.post('/', restrict, upload.single('uploaded'), async (req, res, next) => {
+app.post('/', restrict, upload.single('imagePost'), async (req, res, next) => {
   try {
-    const files = req.file.path
-    const { users_id, title, content, filterView, filterComment, isReported } = req.body
+    const imagePost = req.files ? req.files.path : undefined
+    const file = req.files ? req.files.path : undefined
+    const { userId, title, content, filterView, filterComment } = req.body
     const result = await postController.add({
-      users_id,
+      userId,
       title,
       content,
-      files,
+      imagePost,
+      file,
       filterView,
-      filterComment,
-      isReported
+      filterComment
     })
     res.status(201).json({
       success: true,
@@ -56,19 +56,20 @@ app.post('/', restrict, upload.single('uploaded'), async (req, res, next) => {
   }
 })
 
-app.put('/:id', restrict, upload.single('uploaded'), async (req, res, next) => {
+app.put('/:id', restrict, upload.single('imagePost'), async (req, res, next) => {
   try {
     const { id } = req.params
-    const files = req.file.path
-    const { users_id, title, content, filterView, filterComment, isReported } = req.body
+    const imagePost = req.files ? req.files.path : undefined
+    const file = req.file ? req.file.path : undefined
+    const { userId, title, content, filterView, filterComment } = req.body
     const result = await postController.edit(id, {
-      users_id,
+      userId,
       title,
       content,
-      files,
+      imagePost,
+      file,
       filterView,
-      filterComment,
-      isReported
+      filterComment
     })
     res.status(201).json({
       success: true,

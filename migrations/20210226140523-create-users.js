@@ -25,7 +25,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING(100)
       },
-      image_profile: {
+      imageProfile: {
         type: Sequelize.STRING
       },
       about: {
@@ -39,9 +39,8 @@ module.exports = {
       },
       role: {
         allowNull: false,
-        type: Sequelize.ENUM({
-          values: ['User', 'Admin']
-        })
+        type: Sequelize.ENUM('User', 'Admin'),
+        defaultValue: 'User'
       },
       createdAt: {
         allowNull: false,

@@ -10,18 +10,19 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Posts.hasMany(models.Posts_comments, {foreignKey: 'posts_id'})
-      Posts.hasMany(models.Posts_likes, {foreignKey: 'posts_id'})
-      Posts.hasMany(models.Posts_categories, {foreignKey: 'posts_id'})
-      Posts.hasMany(models.Posts_saves, {foreignKey: 'posts_id'})
-      Posts.hasOne(models.Users, {foreignKey: 'id'})
+      Posts.hasMany(models.Posts_Comments, { foreignKey: 'postId' })
+      Posts.hasMany(models.Posts_Likes, { foreignKey: 'postId' })
+      Posts.hasMany(models.Posts_Categories, { foreignKey: 'postId' })
+      Posts.hasMany(models.Posts_Saves, { foreignKey: 'postId' })
+      Posts.hasOne(models.Users, { foreignKey: 'id' })
     }
   };
   Posts.init({
-    users_id: DataTypes.STRING,
+    userId: DataTypes.STRING,
     title: DataTypes.STRING,
     content: DataTypes.TEXT,
-    files: DataTypes.STRING,
+    imagePost: DataTypes.STRING,
+    file: DataTypes.STRING,
     filterView: DataTypes.STRING,
     filterComment: DataTypes.STRING
   }, {

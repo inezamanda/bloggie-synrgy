@@ -10,13 +10,13 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Users.hasMany(models.Posts, {foreignKey: 'users_id'})
-      Users.hasMany(models.Posts_comments, {foreignKey: 'users_id'})
-      Users.hasMany(models.Posts_likes, {foreignKey: 'users_id'})
-      Users.hasMany(models.Posts_saves, {foreignKey: 'users_id'})
-      Users.hasMany(models.Followers, {foreignKey: 'users_id'})
-      Users.hasMany(models.Followers, {foreignKey: 'followers_id'})
-      Users.belongsToMany(models.Categories, {through: 'Users_interest'})
+      Users.hasMany(models.Posts, { foreignKey: 'userId' })
+      Users.hasMany(models.Posts_Comments, { foreignKey: 'userId' })
+      Users.hasMany(models.Posts_Likes, { foreignKey: 'userId' })
+      Users.hasMany(models.Posts_Saves, { foreignKey: 'userId' })
+      Users.hasMany(models.Followers, { foreignKey: 'userId' })
+      Users.hasMany(models.Followers, { foreignKey: 'followerId' })
+      Users.hasMany(models.Users_Interest, { foreignKey: 'userId' })
     }
   };
   Users.init({
@@ -24,13 +24,13 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING,
     username: DataTypes.STRING,
     fullName: DataTypes.STRING,
-    image_profile: DataTypes.STRING,
+    imageProfile: DataTypes.STRING,
     about: DataTypes.TEXT,
     occupation: DataTypes.STRING,
     location: DataTypes.STRING,
     role: {
       type: DataTypes.STRING,
-      defaultValue: DataTypes.ENUM('User')
+      defaultValue: 'User'
     }
   }, {
     sequelize,
