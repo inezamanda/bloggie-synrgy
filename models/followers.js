@@ -14,7 +14,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Followers.init({
-    users_id: DataTypes.STRING
+    users_id: DataTypes.STRING,
+    follwers_id: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Followers',

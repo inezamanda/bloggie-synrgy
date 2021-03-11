@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       Posts.hasMany(models.Posts_comments, {foreignKey: 'posts_id'})
       Posts.hasMany(models.Posts_likes, {foreignKey: 'posts_id'})
       Posts.hasMany(models.Posts_categories, {foreignKey: 'posts_id'})
-      Posts.hasMany(models.Posts_saved, {foreignKey: 'posts_id'})
+      Posts.hasMany(models.Posts_saves, {foreignKey: 'posts_id'})
       Posts.hasOne(models.Users, {foreignKey: 'id'})
     }
   };
@@ -23,8 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     content: DataTypes.TEXT,
     files: DataTypes.STRING,
     filterView: DataTypes.STRING,
-    filterComment: DataTypes.STRING,
-    isReported: DataTypes.BOOLEAN,
+    filterComment: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Posts',

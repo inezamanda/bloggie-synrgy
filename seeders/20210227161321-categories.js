@@ -9,16 +9,6 @@ const data = [
   {id: nanoid(), name: "Education", icon: "education.ico", createdAt: new Date(), updatedAt: new Date()},
 ]
 
-for (let index = 0; index < 7; index++) {
-  data.push({
-    id: nanoid(),
-    name: faker.lorem.word(),
-    icon: faker.image.image(),
-    createdAt: new Date(),
-    updatedAt: new Date()
-  })
-}
-
 module.exports = {
   data,
   up: async (queryInterface, Sequelize) => {
