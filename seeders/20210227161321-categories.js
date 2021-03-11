@@ -1,24 +1,20 @@
 'use strict';
 
-module.exports = {
-  up: async (queryInterface, Sequelize) => {
-    /**
-     * Add seed commands here.
-     *
-     * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
-     *   isBetaMember: false
-     * }], {});
-    */
-  },
+const { nanoid } = require("nanoid");
+const faker = require('faker')
 
+const data = [
+  { id: nanoid(), name: "Business", icon: "business.ico", createdAt: new Date(), updatedAt: new Date() },
+  { id: nanoid(), name: "Entertainment", icon: "entertainment.ico", createdAt: new Date(), updatedAt: new Date() },
+  { id: nanoid(), name: "Education", icon: "education.ico", createdAt: new Date(), updatedAt: new Date() },
+]
+
+module.exports = {
+  data,
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.bulkInsert('Categories', data, {});
+  },
   down: async (queryInterface, Sequelize) => {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
+    await queryInterface.bulkDelete('Categories', null, {});
   }
 };

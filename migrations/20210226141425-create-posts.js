@@ -7,7 +7,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.STRING(21)
       },
-      users_id: { 
+      userId: {
         type: Sequelize.STRING(21),
         references: {
           model: 'Users',
@@ -22,21 +22,21 @@ module.exports = {
         allowNull: false,
         type: Sequelize.TEXT
       },
-      files: {
+      imagePost: {
+        type: Sequelize.STRING
+      },
+      file: {
         type: Sequelize.STRING
       },
       filterView: {
-        type: Sequelize.ENUM({
-          values: ['Anyone', 'Followers']
-        })
+        allowNull: false,
+        type: Sequelize.ENUM('Anyone', 'Followers'),
+        defaultValue: 'Anyone'
       },
       filterComment: {
-        type: Sequelize.ENUM({
-          values: ['Anyone', 'Followers', 'None']
-        })
-      },
-      isReported: {
-        type: Sequelize.BOOLEAN
+        allowNull: false,
+        type: Sequelize.ENUM('Anyone', 'Followers', 'None'),
+        defaultValue: 'Anyone'
       },
       createdAt: {
         allowNull: false,

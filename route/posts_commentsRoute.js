@@ -1,8 +1,8 @@
 const express = require('express')
-const {ForeignKeyConstraintError} = require('sequelize')
+const { ForeignKeyConstraintError } = require('sequelize')
 const PostsCommentsController = require('../controller/posts_commentsController')
-const {commentValidation, editCommentValidation} = require('../validator/validation')
-const {ValidationError} = require('joi')
+const { commentValidation, editCommentValidation } = require('../validator/validation')
+const { ValidationError } = require('joi')
 
 const postsComments = new PostsCommentsController()
 const app = express.Router()
@@ -16,15 +16,15 @@ app.post('/', async (req, res, next) => {
       message: 'Add comments successful',
       data: comment
     })
-  } catch(error) {
-    if (error instanceof ForeignKeyConstraintError){
+  } catch (error) {
+    if (error instanceof ForeignKeyConstraintError) {
       res.status(500).json({
         error: {
           status: '500 Internal Server Error',
           message: `Something wrong, foreign key constraint doesn't match`
         }
       })
-    } else if (error instanceof ValidationError){
+    } else if (error instanceof ValidationError) {
       res.status(500).json({
         error: {
           status: '500 Internal Server Error',
@@ -32,14 +32,14 @@ app.post('/', async (req, res, next) => {
         }
       })
     }
-    else{
+    else {
       next(error)
     }
   }
 })
 
 app.get('/', async (req, res, next) => {
-  const comment =  await postsComments.get(req.query)
+  const comment = await postsComments.get(req.query)
   res.status(200).json({
     status: '200 OK',
     message: 'Read all comments successful',
@@ -48,7 +48,7 @@ app.get('/', async (req, res, next) => {
 })
 
 app.get('/:id', async (req, res, next) => {
-  const {params} = req
+  const { params } = req
   const comment = await postsComments.getId(params.id)
   if (comment) {
     res.status(200).json({
@@ -56,7 +56,7 @@ app.get('/:id', async (req, res, next) => {
       message: 'Read comments successful',
       data: comment
     })
-  } else{
+  } else {
     res.status(404).json({
       error: {
         status: '404 Not Found',
@@ -68,10 +68,10 @@ app.get('/:id', async (req, res, next) => {
 
 app.put('/:id', async (req, res, next) => {
   try {
-    const {body, params} = req
+    const { body, params } = req
     const result = await editCommentValidation.validateAsync(body)
     const comment = await postsComments.edit(params.id, result)
-    if(comment[0]){
+    if (comment[0]) {
       res.status(200).json({
         status: '200 OK',
         message: 'Edit comments successful'
@@ -84,15 +84,15 @@ app.put('/:id', async (req, res, next) => {
         }
       })
     }
-  } catch(error) {
-    if (error instanceof ForeignKeyConstraintError){
+  } catch (error) {
+    if (error instanceof ForeignKeyConstraintError) {
       res.status(500).json({
         error: {
           status: '500 Internal Server Error',
           message: `Something wrong, foreign key constraint doesn't match`
         }
       })
-    } else if (error instanceof ValidationError){
+    } else if (error instanceof ValidationError) {
       res.status(500).json({
         error: {
           status: '500 Internal Server Error',
@@ -100,21 +100,21 @@ app.put('/:id', async (req, res, next) => {
         }
       })
     }
-    else{
+    else {
       next(error)
     }
   }
 })
 
 app.delete('/:id', async (req, res, next) => {
-  const {params} = req
+  const { params } = req
   const comment = await postsComments.remove(params.id)
   if (comment) {
     res.status(200).json({
       status: '200 OK',
       message: 'Delete comments successful'
     })
-  } else{
+  } else {
     res.status(404).json({
       error: {
         status: '404 Not Found',

@@ -10,25 +10,28 @@ authRoute.post(`/register`, upload.single('image_profile'), upload.single('image
         const image_header = req.file ? req.file.path : undefined;
         const result = await user.register(email, password, username, fullName, image_profile, about, interest, 'User', image_header, location, occupation);
         res.json({
-            status : '201 Created',
-            success : true,
-            message : `Register success`,
-            data : {result}
-         });
+            status: '201 Created',
+            success: true,
+            message: `Register success`,
+            data: { result }
+        });
     } catch (error) {
         next(error)
     };
 });
 
-authRoute.post(`/login`, async(req, res, next) => {
+authRoute.post(`/login`, async (req, res, next) => {
     try {
-        const { email, password } = req.body;
+        const {
+            email,
+            password
+        } = req.body;
         const result = await user.login(email, password);
         res.json({
-            status : '302 Found',
-            success : true,
-            message : `Login success`,
-            data : {result}
+            status: '302 Found',
+            success: true,
+            message: `Login success`,
+            data: { result }
         });
     } catch (error) {
         next(error)
