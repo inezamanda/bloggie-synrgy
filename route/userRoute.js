@@ -26,16 +26,16 @@ userRoute.get('/:username', async(req, res, next) => {
 });
 
 // update profile
-userRoute.put(`/edit`, restrict, upload.single('image_profile'), upload.single('image_header'), async(req, res, next) => {
+userRoute.put(`/edit`, restrict, upload.single('imageProfile'), upload.single('imageHeader'), async(req, res, next) => {
     try {
         const id = req.user.id;
         // const { User } = req
         // var decoded = jwt.verify(req.token, JWT_SECRET);
         // var userId = decoded.id
         const { username, fullName, about, email, location } = req.body
-        const image_profile = req.file ? req.file.path : undefined;
-        const image_header = req.file ? req.file.path : undefined;
-        const result = await user.edit(id, { image_profile, fullName, username, about, email, location, image_header});
+        const imageProfile = req.file ? req.file.path : undefined;
+        const imageHeader = req.file ? req.file.path : undefined;
+        const result = await user.edit(id, { imageProfile, fullName, username, about, email, location, imageHeader});
         res.status(201).json({
             status : '201 Update',
             success : true,
