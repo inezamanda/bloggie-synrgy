@@ -27,6 +27,7 @@ app.use('/category', require('./route/categoriesRoute'))
 app.use('/post', require('./route/postRoute'))
 app.use('/users', require('./route/resetPasswordRoute'))
 app.use(authRoute)
+app.use('/users', require('./route/search'))
 app.use('/', require('./route/indexRoute'))
 
 app.get('/', (req, res) => {
