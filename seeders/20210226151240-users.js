@@ -12,10 +12,10 @@ for (let index = 0; index < 7; index++) {
     password: faker.internet.password(),
     username: faker.internet.userName(),
     fullName: faker.name.findName(),
-    image_profile: faker.image.avatar(),
-    image_header: faker.image.nature(),
+    imageProfile: faker.image.avatar(),
     about: faker.lorem.lines(),
     occupation: faker.name.jobTitle(),
+    location: faker.address.state(),
     role: 'User',
     createdAt: new Date(),
     updatedAt: new Date()
@@ -25,9 +25,9 @@ for (let index = 0; index < 7; index++) {
 module.exports = {
   data,
   up: async (queryInterface, Sequelize) => {
-      await queryInterface.bulkInsert('Users', data, {});
+    await queryInterface.bulkInsert('Users', data, {});
   },
   down: async (queryInterface, Sequelize) => {
-      await queryInterface.bulkDelete('Users', null, {});
+    await queryInterface.bulkDelete('Users', null, {});
   }
 };

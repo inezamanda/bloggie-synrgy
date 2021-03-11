@@ -1,9 +1,9 @@
 const express = require('express')
 const CategoriesController = require('../controller/categoriesController')
-const {categoryValidation, editCategoryValidation} = require('../validator/validation')
+const { categoryValidation, editCategoryValidation } = require('../validator/validation')
 const upload = require('../middleware/multerMiddleware')
-const {ValidationError} = require('joi')
-const {DatabaseError} = require('sequelize')
+const { ValidationError } = require('joi')
+const { DatabaseError } = require('sequelize')
 
 const categories = new CategoriesController()
 const app = express.Router()
@@ -11,7 +11,7 @@ const app = express.Router()
 app.post('/', upload.single('icon'), async (req, res, next) => {
   try {
     const result = await categoryValidation.validateAsync(req.body)
-    const {name} = result
+    const { name } = result
     const icon = req.file ? req.file.path : undefined;
     const category = await categories.add({
       name,
@@ -22,8 +22,8 @@ app.post('/', upload.single('icon'), async (req, res, next) => {
       message: 'Add categories successful',
       data: category
     })
-  } catch(error) {
-    if (error instanceof ValidationError){
+  } catch (error) {
+    if (error instanceof ValidationError) {
       res.status(500).json({
         error: {
           status: '500 Internal Server Error',
@@ -38,14 +38,14 @@ app.post('/', upload.single('icon'), async (req, res, next) => {
         }
       })
     }
-    else{
+    else {
       next(error)
     }
   }
 })
 
 app.get('/', async (req, res, next) => {
-  const category =  await categories.get(req.query)
+  const category = await categories.get(req.query)
   res.status(200).json({
     status: '200 OK',
     message: 'Read all categories successful',
@@ -54,7 +54,7 @@ app.get('/', async (req, res, next) => {
 })
 
 app.get('/:id', async (req, res, next) => {
-  const {params} = req
+  const { params } = req
   const category = await categories.getId(params.id)
   if (category) {
     res.status(200).json({
@@ -62,7 +62,7 @@ app.get('/:id', async (req, res, next) => {
       message: 'Read categories successful',
       data: category
     })
-  } else{
+  } else {
     res.status(404).json({
       status: '404 Not Found',
       message: 'Categories not found'
@@ -72,15 +72,15 @@ app.get('/:id', async (req, res, next) => {
 
 app.put('/:id', upload.single('icon'), async (req, res, next) => {
   try {
-    const {body, params} = req
+    const { body, params } = req
     const result = await editCategoryValidation.validateAsync(body)
-    const {name} = result
+    const { name } = result
     const icon = req.file ? req.file.path : undefined;
     const category = await categories.edit(params.id, {
       name,
       icon
     })
-    if(category[0]){
+    if (category[0]) {
       res.status(200).json({
         status: '200 OK',
         message: 'Edit categories successful'
@@ -93,29 +93,29 @@ app.put('/:id', upload.single('icon'), async (req, res, next) => {
         }
       })
     }
-  } catch(error) {
-    if (error instanceof ValidationError){
+  } catch (error) {
+    if (error instanceof ValidationError) {
       res.status(500).json({
         error: {
           status: '500 Internal Server Error',
           message: `${error.details.map(err => err.message)}`
         }
       })
-    } else{
+    } else {
       next(error)
     }
   }
 })
 
 app.delete('/:id', async (req, res, next) => {
-  const {params} = req
+  const { params } = req
   const category = await categories.remove(params.id)
   if (category) {
     res.status(200).json({
       status: '200 OK',
       message: 'Delete categories successful'
     })
-  } else{
+  } else {
     res.status(404).json({
       status: '404 Not Found',
       message: 'Categories not found'
