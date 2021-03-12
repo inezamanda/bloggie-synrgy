@@ -1,6 +1,7 @@
 const express = require('express')
 const FollowersController = require('../controller/FollowersController')
 
+const {ForeignKeyConstraintError, DatabaseError} = require('sequelize')
 const restrict = require('../middleware/passportMiddleware')
 const followers = new FollowersController()
 const app = express.Router()
@@ -21,6 +22,13 @@ app.post('/', restrict, async (req, res, next) => {
         error: {
           status: '500 Internal Server Error',
           message: `Something wrong, foreign key constraint doesn't match`
+        }
+      })
+    } else if (error instanceof DatabaseError) {
+      res.status(500).json({
+        error: {
+          status: '500 Internal Server Error',
+          message: `Something went wrong, invalid input value`
         }
       })
     }
