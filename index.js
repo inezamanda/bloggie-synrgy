@@ -17,6 +17,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.static('views'));
 // app.use(multer)
 app.use(passport.initialize())
+app.use('/mainfeed', require('./route/mainFeedRoute'))
 app.use('/comment', require('./route/posts_commentsRoute'))
 app.use('/category', require('./route/categoriesRoute'))
 app.use('/post', require('./route/postRoute'))
