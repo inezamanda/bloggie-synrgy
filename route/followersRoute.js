@@ -10,12 +10,21 @@ app.post('/', restrict, async (req, res, next) => {
   try {
     const userId = req.user.id
     const {followerId} = req.body
-    const result = await followers.add({userId, followerId})
-    res.status(200).json({
-      status: '200 OK',
-      message: 'Followed successful',
-      data: result
-    })
+    if (userId == followerId) {
+      res.status(500).json({
+        error: {
+          status: '500 Internal Server Error',
+          message: `Something wrong, userId can't be same as followerId`
+        }
+      })
+    } else {
+        const result = await followers.add({userId, followerId})
+        res.status(200).json({
+        status: '200 OK',
+        message: 'Followed successful',
+        data: result
+      })
+    }
   } catch (error) {
     if (error instanceof ForeignKeyConstraintError) {
       res.status(500).json({
