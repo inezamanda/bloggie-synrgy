@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       Posts.hasMany(models.Posts_Likes, { foreignKey: 'postId' })
       Posts.hasMany(models.Posts_Categories, { foreignKey: 'postId' })
       Posts.hasMany(models.Posts_Saves, { foreignKey: 'postId' })
-      Posts.hasOne(models.Users, { foreignKey: 'id' })
+      Posts.belongsTo(models.Users, { foreignKey: 'userId' })
     }
   };
   Posts.init({
