@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Categories.hasMany(models.Posts_Categories, { foreignKey: 'categoryId' })
-      Categories.hasMany(models.Users_Interest, { foreignKey: 'categoryId' })
+      Categories.hasMany(models.Users_Interests, { foreignKey: 'categoryId' })
     }
   };
   Categories.init({
