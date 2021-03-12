@@ -19,6 +19,7 @@ app.use(express.static('views'));
 app.use(passport.initialize())
 app.use('/comment', require('./route/posts_commentsRoute'))
 app.use('/category', require('./route/categoriesRoute'))
+app.use('/postcategory', require('./route/postsCategoriesRoute'))
 app.use('/post', require('./route/postRoute'))
 app.use('/users', require('./route/resetPasswordRoute'))
 // app.use('/interest', require('./route/userInterestRoute'))
