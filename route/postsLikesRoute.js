@@ -1,6 +1,7 @@
 const express = require('express')
 const PostsLikesController = require('../controller/postsLikesController')
 
+const {ForeignKeyConstraintError} = require('sequelize')
 const restrict = require('../middleware/passportMiddleware')
 const postsLikes = new PostsLikesController()
 const app = express.Router()
