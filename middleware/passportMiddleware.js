@@ -14,4 +14,6 @@ passport.use(new Strategy({
       .catch(err => done(err, false))
 }))
 
-module.exports = passport;
+const jwt = passport.authenticate(`jwt`, { session : false });
+
+module.exports = jwt;
