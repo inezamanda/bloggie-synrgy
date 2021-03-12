@@ -3,7 +3,7 @@ const UserController = require('../controller/userController');
 const user = new UserController()
 const upload = require('../middleware/multerMiddleware')
 
-authRoute.post(`/register`, upload.single('imageProfile'), upload.single('imageHeader'), async(req, res, next) => {
+authRoute.post(`/register`, upload.single('imageProfile'), async(req, res, next) => {
     try {
         const { email, password, username, fullName, about, interest, location, occupation } = req.body
         const imageProfile = req.file ? req.file.path : undefined;
