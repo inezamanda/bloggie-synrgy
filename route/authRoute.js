@@ -5,10 +5,10 @@ const upload = require('../middleware/multerMiddleware')
 
 authRoute.post(`/register`, upload.single('imageProfile'), async (req, res, next) => {
     try {
-        const { email, password, username, fullName, about, interest, role } = req.body
+        const { email, password, username, fullName, about, role } = req.body
         const imageProfile = req.file ? req.file.path : undefined;
 
-        const result = await user.register(email, password, username, fullName, imageProfile, about, interest, role);
+        const result = await user.register(email, password, username, fullName, imageProfile, about, role);
 
         res.json({
             status: '201 Created',
