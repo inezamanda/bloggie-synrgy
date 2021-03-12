@@ -1,8 +1,7 @@
 const userRoute = require('express').Router();
 const UserController = require('../controller/userController');
 const user = new UserController()
-const passport = require('../middleware/passportMiddleware')
-const restrict = passport.authenticate('jwt', { session: false })
+const restrict = require('../middleware/passportMiddleware')
 const upload = require('../middleware/multerMiddleware')
 
 // get profile
