@@ -1,10 +1,6 @@
 const userRoute = require('express').Router();
 const UserController = require('../controller/userController');
 const user = new UserController()
-const { Users } = require('../models')
-const {JWT_SECRET} = process.env
-const jwt_decode = require('jwt-decode');
-const jwt = require(`jsonwebtoken`);
 const passport = require('../middleware/passportMiddleware')
 const restrict = passport.authenticate('jwt', { session: false })
 const upload = require('../middleware/multerMiddleware')

@@ -28,6 +28,9 @@ module.exports = {
       imageProfile: {
         type: Sequelize.STRING
       },
+      imageHeader: {
+        type: Sequelize.STRING
+      },
       about: {
         type: Sequelize.TEXT
       },
