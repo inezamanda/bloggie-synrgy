@@ -2,8 +2,7 @@ const userAdminRoute = require('express').Router()
 const UserController = require('../controller/userController');
 const user = new UserController()
 const upload = require('../middleware/multerMiddleware')
-const passport = require('../middleware/passportMiddleware')
-const restrict = passport.authenticate('jwt', { session: false })
+const restrict = require('../middleware/passportMiddleware')
 const isAdmin = require('../middleware/isAdmin')
 
 // To create new admin ( mempermudah buat testing saja)
