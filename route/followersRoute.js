@@ -1,0 +1,64 @@
+const express = require('express')
+const FollowersController = require('../controller/FollowersController')
+
+const restrict = require('../middleware/passportMiddleware')
+const followers = new FollowersController()
+const app = express.Router()
+
+app.post('/', restrict, async (req, res, next) => {
+  try {
+    const userId = req.user.id
+    const {followerId} = req.body
+    const result = await followers.add({userId, followerId})
+    res.status(200).json({
+      status: '200 OK',
+      message: 'Followed successful',
+      data: result
+    })
+  } catch (error) {
+    if (error instanceof ForeignKeyConstraintError) {
+      res.status(500).json({
+        error: {
+          status: '500 Internal Server Error',
+          message: `Something wrong, foreign key constraint doesn't match`
+        }
+      })
+    }
+    else {
+      next(error)
+    }
+  }
+})
+
+app.get('/', async (req, res, next) => {
+  try {
+    const result = await followers.get(req.query)
+    res.status(200).json({
+      status: '200 OK',
+      message: 'Read all followers successful',
+      data: result
+    })
+  } catch (error) {
+    next (error)
+  }
+})
+
+app.delete('/:id', async (req, res, next) => {
+  const { params } = req
+  const result = await followers.remove(params.id)
+  if (result) {
+    res.status(200).json({
+      status: '200 OK',
+      message: 'Unfollowed successful'
+    })
+  } else {
+    res.status(404).json({
+      error: {
+        status: '404 Not Found',
+        message: 'Followers not found'
+      }
+    })
+  }
+}) 
+
+module.exports = app
