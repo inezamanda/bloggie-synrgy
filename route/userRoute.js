@@ -22,7 +22,7 @@ userRoute.get('/:username', async(req, res, next) => {
 });
 
 // update profile
-userRoute.put(`/edit`, restrict, upload.single('imageProfile'), upload.single('imageHeader'), async(req, res, next) => {
+userRoute.put(`/edit`, restrict, upload.single('imageProfile'), async(req, res, next) => {
     try {
         const id = req.user.id;
         // const { User } = req
@@ -30,8 +30,7 @@ userRoute.put(`/edit`, restrict, upload.single('imageProfile'), upload.single('i
         // var userId = decoded.id
         const { username, fullName, about, email, location } = req.body
         const imageProfile = req.file ? req.file.path : undefined;
-        const imageHeader = req.file ? req.file.path : undefined;
-        const result = await user.edit(id, { imageProfile, fullName, username, about, email, location, imageHeader});
+        const result = await user.edit(id, { imageProfile, fullName, username, about, email, location});
         res.status(201).json({
             status : '201 Update',
             success : true,
