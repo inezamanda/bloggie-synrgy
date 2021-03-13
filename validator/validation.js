@@ -1,12 +1,12 @@
 const Joi = require("joi");
 
 const commentValidation = Joi.object({
-  posts_id: Joi.string()
+  postId: Joi.string()
     .min(1)
     .max(21)
     .required(),
 
-  users_id: Joi.string()
+  userId: Joi.string()
     .min(1)
     .max(21)
     .required(),
@@ -63,9 +63,22 @@ const editCategoryValidation = Joi.object({
     .pattern(/^[a-zA-Z]+$/)
 })
 
+const postCategoryValidation = Joi.object({
+  postId: Joi.string()
+    .min(1)
+    .max(21)
+    .required(),
+  
+  categoryId: Joi.string()
+    .min(1)
+    .max(21)
+    .required()
+})
+
 module.exports = {
   commentValidation,
   editCommentValidation,
   categoryValidation,
-  editCategoryValidation
+  editCategoryValidation,
+  postCategoryValidation
 }
