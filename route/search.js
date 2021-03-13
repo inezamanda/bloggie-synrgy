@@ -3,6 +3,8 @@ const express = require('express')
 const UserController = require('../controller/userController')
 const user = new UserController()
 const restrict = require('../middleware/passportMiddleware')
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op
 const app = express.Router()
 
 

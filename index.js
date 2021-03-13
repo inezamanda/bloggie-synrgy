@@ -25,10 +25,9 @@ app.use('/postcategory', require('./route/postsCategoriesRoute'))
 app.use('/post', require('./route/postRoute'))
 app.use('/follow', require('./route/followersRoute'))
 app.use('/interest', require('./route/userInterestRoute'))
-app.use('/user', require('./route/resetPasswordRoute'), require(`./route/userRoute`))
+app.use('/user', require('./route/resetPasswordRoute'), require(`./route/userRoute`), require('./route/search'))
 app.use('/admin', require(`./route/userAdminRoute`))
-app.use(authRoute)
-app.use('/users', require('./route/search'))
+// app.use(authRoute)
 app.use('/', require('./route/indexRoute'))
 
 app.get('/', (req, res) => {
