@@ -1,5 +1,5 @@
 const express = require('express')
-const FollowersController = require('../controller/FollowersController')
+const FollowersController = require('../controller/followersController')
 
 const {ForeignKeyConstraintError, DatabaseError} = require('sequelize')
 const restrict = require('../middleware/passportMiddleware')

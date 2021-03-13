@@ -14,7 +14,7 @@ if (!fs.existsSync('images')) {
 app.set('view engine', 'ejs');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
-app.use(express.static('views'));
+app.use(express.static('public'));
 // app.use(multer)
 app.use(passport.initialize())
 app.use('/like', require('./route/postsLikesRoute'))
@@ -31,14 +31,14 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
-app.use("/", (req, res, next) => {
-  res.status("404").json({
-    error: {
-      status: "404 Not Found",
-      message: "Route not found"
-    }
-  })
-})
+// app.use("/", (req, res, next) => {
+//   res.status("404").json({
+//     error: {
+//       status: "404 Not Found",
+//       message: "Route not found"
+//     }
+//   })
+// })
 
 const port = process.env.PORT;
 app.listen(port, () => {
