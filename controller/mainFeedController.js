@@ -1,4 +1,4 @@
-const { Posts } = require('../models')
+const { Posts, Users } = require('../models')
 const BaseController = require('./baseController')
 
 class MainFeedController extends BaseController {
@@ -9,7 +9,7 @@ class MainFeedController extends BaseController {
     async getPost() {
         const result = await Posts.findAll({
             include: {
-                model: 'Users',
+                model: Users,
                 require: true
             }
         })

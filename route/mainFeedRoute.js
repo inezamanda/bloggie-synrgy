@@ -1,6 +1,5 @@
 const express = require('express')
 const mainFeedController = require('../controller/mainFeedController')
-const MainFeedController = require('../controller/mainFeedController')
 
 const app = express.Router()
 
