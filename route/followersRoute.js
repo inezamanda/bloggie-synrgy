@@ -1,7 +1,7 @@
 const express = require('express')
-const FollowersController = require('../controller/FollowersController')
+const FollowersController = require('../controller/followersController')
 
-const {ForeignKeyConstraintError, DatabaseError} = require('sequelize')
+const { ForeignKeyConstraintError, DatabaseError } = require('sequelize')
 const restrict = require('../middleware/passportMiddleware')
 const followers = new FollowersController()
 const app = express.Router()
@@ -9,7 +9,7 @@ const app = express.Router()
 app.post('/', restrict, async (req, res, next) => {
   try {
     const userId = req.user.id
-    const {followerId} = req.body
+    const { followerId } = req.body
     if (userId == followerId) {
       res.status(500).json({
         error: {
@@ -18,8 +18,8 @@ app.post('/', restrict, async (req, res, next) => {
         }
       })
     } else {
-        const result = await followers.add({userId, followerId})
-        res.status(200).json({
+      const result = await followers.add({ userId, followerId })
+      res.status(200).json({
         status: '200 OK',
         message: 'Followed successful',
         data: result
@@ -56,7 +56,7 @@ app.get('/', async (req, res, next) => {
       data: result
     })
   } catch (error) {
-    next (error)
+    next(error)
   }
 })
 
@@ -76,6 +76,6 @@ app.delete('/:id', async (req, res, next) => {
       }
     })
   }
-}) 
+})
 
 module.exports = app

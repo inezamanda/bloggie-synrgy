@@ -246,7 +246,17 @@ const resetPasswordValidation = Joi.object({
     .required()
 })
 
-
+const postCategoryValidation = Joi.object({
+  postId: Joi.string()
+    .min(1)
+    .max(21)
+    .required(),
+  
+  categoryId: Joi.string()
+    .min(1)
+    .max(21)
+    .required()
+})
 
 module.exports = {
   commentValidation,
@@ -258,5 +268,6 @@ module.exports = {
   registerValidation,
   loginValidation,
   forgotPasswordValidation,
-  resetPasswordValidation
+  resetPasswordValidation,
+  postCategoryValidation
 }
