@@ -11,8 +11,10 @@ const app = express.Router()
 
 app.post('/', restrict, async (req, res, next) => {
   try {
+    const userId = req.user.id
     const comment = await commentValidation.validateAsync(req.body)
-    const result = await postsComments.add(comment)
+    const {postId, content} = comment
+    const result = await postsComments.add({postId, userId, content})
     res.status(201).json({
       status: '201 Created',
       message: 'Add comments successful',
@@ -79,8 +81,13 @@ app.get('/:id', async (req, res, next) => {
 app.put('/:id', restrict, async (req, res, next) => {
   try {
     const { body, params } = req
+    const userId = req.user.id
     const comment = await editCommentValidation.validateAsync(body)
-    const result = await postsComments.edit(params.id, comment)
+    const {content} = comment
+    const result = await postsComments.edit(params.id, {
+      userId, 
+      content
+    })
     if (result[0]) {
       res.status(200).json({
         status: '200 OK',
