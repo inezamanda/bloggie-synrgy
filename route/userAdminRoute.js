@@ -52,37 +52,37 @@ userAdminRoute.get('/user/:username', restrict, isAdmin, async(req, res, next) =
     };
 })
 
-userAdminRoute.post('/create/user', restrict, isAdmin, upload.single('imageProfile'), async(req, res, next) => {
-    try {
-        const { email, password, username, fullName, about, interest, location, occupation } = req.body
-        const imageProfile = req.file ? req.file.path : undefined;
-        const result = await user.register(email, password, username, fullName, imageProfile, about, interest, 'User', location, occupation);
-        res.json({
-            status : '201 Created',
-            success : true,
-            message : `Register success`,
-            data : {result}
-         });
-    } catch (error) {
-        next(error)
-    };
-})
+// userAdminRoute.post('/create/user', restrict, isAdmin, upload.single('imageProfile'), async(req, res, next) => {
+//     try {
+//         const { email, password, username, fullName, about, interest, location, occupation } = req.body
+//         const imageProfile = req.file ? req.file.path : undefined;
+//         const result = await user.register(email, password, username, fullName, imageProfile, about, interest, 'User', location, occupation);
+//         res.json({
+//             status : '201 Created',
+//             success : true,
+//             message : `Register success`,
+//             data : {result}
+//          });
+//     } catch (error) {
+//         next(error)
+//     };
+// })
 
-userAdminRoute.post('/create/admin', restrict, isAdmin, upload.single('imageProfile'), async(req, res, next) => {
-    try {
-        const { email, password, username, fullName, about, interest, location, occupation } = req.body
-        const imageProfile = req.file ? req.file.path : undefined;
-        const result = await user.register(email, password, username, fullName, imageProfile, about, interest, 'Admin', location, occupation);
-        res.json({
-            status : '201 Created',
-            success : true,
-            message : `Register success`,
-            data : {result}
-         });
-    } catch (error) {
-        next(error)
-    };
-})
+// userAdminRoute.post('/create/admin', restrict, isAdmin, upload.single('imageProfile'), async(req, res, next) => {
+//     try {
+//         const { email, password, username, fullName, about, interest, location, occupation } = req.body
+//         const imageProfile = req.file ? req.file.path : undefined;
+//         const result = await user.register(email, password, username, fullName, imageProfile, about, interest, 'Admin', location, occupation);
+//         res.json({
+//             status : '201 Created',
+//             success : true,
+//             message : `Register success`,
+//             data : {result}
+//          });
+//     } catch (error) {
+//         next(error)
+//     };
+// })
 
 userAdminRoute.put('/user/:id', restrict, isAdmin, upload.single('imageProfile'), async(req, res, next) => {
     try {

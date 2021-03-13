@@ -6,7 +6,6 @@ const app = express.Router()
 app.get('/', async (req, res, next) => {
     try {
         const result = await mainFeedController.getPost()
-
         res.status(200).json({
             success: true,
             message: 'Success',
