@@ -57,7 +57,7 @@ app.get('/:id', async (req, res, next) => {
 app.post('/', restrict, upload.single('imagePost'), async (req, res, next) => {
   try {
     const imagePost = req.file ? req.file.path : undefined
-    const file = req.files ? req.files.path : undefined
+    // const file = req.files ? req.files.path : undefined
     const { userId, title, content, filterView, filterComment } = req.body
     const result = await postController.add({
       userId,
@@ -82,7 +82,7 @@ app.put('/:id', restrict, upload.single('imagePost'), async (req, res, next) => 
   try {
     const { id } = req.params
     const imagePost = req.files ? req.files.path : undefined
-    const file = req.file ? req.file.path : undefined
+    // const file = req.file ? req.file.path : undefined
     const { userId, title, content, filterView, filterComment } = req.body
     const result = await postController.edit(id, {
       userId,

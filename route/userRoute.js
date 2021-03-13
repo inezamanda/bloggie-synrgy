@@ -5,20 +5,6 @@ const restrict = require('../middleware/passportMiddleware')
 const upload = require('../middleware/multerMiddleware')
 
 // get profile
-userRoute.get('/:username', async(req, res, next) => {
-    try {
-        const { username} = req.params;
-        const result = await user.get({ username });
-        res.status(200).json({
-            status : '200 Found',
-            success : true,
-            message : `Success`,
-            data : result
-        });
-    } catch (error) {
-        next(error)
-    };
-});
 
 // update profile
 userRoute.put(`/edit`, restrict, upload.single('imageProfile'), async(req, res, next) => {
@@ -55,5 +41,20 @@ userRoute.delete('/delete', restrict, async (req, res, next) => {
         next(error)
     }
 })
+
+userRoute.get('/:username', async(req, res, next) => {
+    try {
+        const { username} = req.params;
+        const result = await user.get({ username });
+        res.status(200).json({
+            status : '200 Found',
+            success : true,
+            message : `Success`,
+            data : result
+        });
+    } catch (error) {
+        next(error)
+    };
+});
 
 module.exports = userRoute;

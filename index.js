@@ -4,9 +4,6 @@ const app = express();
 
 // setting passport
 const passport = require('passport')
-const authRoute = require(`./route/authRoute`)
-const userAdminRoute = require(`./route/userAdminRoute`)
-const userRoute = require(`./route/userRoute`)
 const fs = require('fs')
 // kodingan untuk membuat folder "images" secara otomatis
 if (!fs.existsSync('images')) {
@@ -19,9 +16,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'));
 // app.use(multer)
 app.use(passport.initialize())
-app.use(authRoute)
-app.use(userAdminRoute)
-app.use(userRoute)
+app.use('/', require(`./route/authRoute`))
 app.use('/like', require('./route/postsLikesRoute'))
 app.use('/mainfeed', require('./route/mainFeedRoute'))
 app.use('/comment', require('./route/posts_commentsRoute'))
@@ -31,7 +26,8 @@ app.use('/post', require('./route/postRoute'))
 app.use('/follow', require('./route/followersRoute'))
 app.use('/users', require('./route/resetPasswordRoute'))
 app.use('/interest', require('./route/userInterestRoute'))
-app.use(authRoute)
+app.use('/user', require(`./route/userRoute`))
+app.use('/', require(`./route/userAdminRoute`))
 app.use('/', require('./route/indexRoute'))
 
 app.get('/', (req, res) => {
