@@ -60,6 +60,19 @@ app.get('/', async (req, res, next) => {
   }
 })
 
+app.get('/:id', async (req, res, next) => {
+  try {
+    const result = await postsCategories.getPostByCategory(req.params.id)
+    res.status(200).json({
+      status: '200 OK',
+      message: 'Read all posts by category successful',
+      data: result
+    })
+  } catch (error) {
+    next (error)
+  }
+})
+
 app.delete('/:id', async (req, res, next) => {
   const { params } = req
   const result = await postsCategories.remove(params.id)
