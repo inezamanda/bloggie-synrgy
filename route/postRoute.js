@@ -5,6 +5,19 @@ const restrict = require('../middleware/passportMiddleware')
 
 const app = express.Router()
 
+app.get('/LastWeek', restrict, async (req, res, next) => {
+  try {
+    const result = await postController.getPostLastWeek()
+    res.status(200).json({
+      success: true,
+      message: 'Success',
+      data: result
+    })
+  } catch (error) {
+    next(error)
+  }
+})
+
 app.get('/active', restrict, async (req, res, next) => {
   try {
     const { id } = req.user

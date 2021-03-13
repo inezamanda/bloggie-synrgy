@@ -7,7 +7,7 @@ const upload = require('../middleware/multerMiddleware')
 // get profile
 
 // update profile
-userRoute.put(`/edit`, restrict, upload.single('imageProfile'), async(req, res, next) => {
+userRoute.put(`/edit`, restrict, upload.single('imageProfile'), async (req, res, next) => {
     try {
         const id = req.user.id;
         // const { User } = req
@@ -15,12 +15,12 @@ userRoute.put(`/edit`, restrict, upload.single('imageProfile'), async(req, res, 
         // var userId = decoded.id
         const { username, fullName, about, email, location } = req.body
         const imageProfile = req.file ? req.file.path : undefined;
-        const result = await user.edit(id, { imageProfile, fullName, username, about, email, location});
+        const result = await user.edit(id, { imageProfile, fullName, username, about, email, location });
         res.status(201).json({
-            status : '201 Update',
-            success : true,
-            message : `Updated account = '${id}' successfully`,
-            data : result
+            status: '201 Update',
+            success: true,
+            message: `Updated account = '${id}' successfully`,
+            data: result
         });
     } catch (error) {
         next(error)
@@ -33,24 +33,24 @@ userRoute.delete('/delete', restrict, async (req, res, next) => {
         const id = req.user.id
         await user.remove(id)
         res.status(200).json({
-            status : '200 Ok',
-            success : true,
-            message : `Delete account = '${id}' successfully`,
+            status: '200 Ok',
+            success: true,
+            message: `Delete account = '${id}' successfully`,
         })
     } catch (error) {
         next(error)
     }
 })
 
-userRoute.get('/:username', async(req, res, next) => {
+userRoute.get('/get/:username', async (req, res, next) => {
     try {
-        const { username} = req.params;
+        const { username } = req.params;
         const result = await user.get({ username });
         res.status(200).json({
-            status : '200 Found',
-            success : true,
-            message : `Success`,
-            data : result
+            status: '200 Found',
+            success: true,
+            message: `Success`,
+            data: result
         });
     } catch (error) {
         next(error)

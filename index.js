@@ -24,10 +24,10 @@ app.use('/category', require('./route/categoriesRoute'))
 app.use('/postcategory', require('./route/postsCategoriesRoute'))
 app.use('/post', require('./route/postRoute'))
 app.use('/follow', require('./route/followersRoute'))
-app.use('/users', require('./route/resetPasswordRoute'))
 app.use('/interest', require('./route/userInterestRoute'))
+app.use('/user', require('./route/resetPasswordRoute'))
 app.use('/user', require(`./route/userRoute`))
-app.use('/', require(`./route/userAdminRoute`))
+app.use('/admin', require(`./route/userAdminRoute`))
 app.use('/', require('./route/indexRoute'))
 
 app.get('/', (req, res) => {
