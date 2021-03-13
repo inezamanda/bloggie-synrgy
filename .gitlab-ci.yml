@@ -1,0 +1,7 @@
+production:
+  image: ruby:latest
+  script:
+    - gem install dpl
+    - dpl --provider=heroku --app=$HEROKU_APP_PRODUCTION --api-key=$HEROKU_API_KEY
+  only:
+    - production
