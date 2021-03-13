@@ -2,13 +2,16 @@ const express = require('express')
 const PostsCategoriesController = require('../controller/postsCategoriesController')
 
 const {ForeignKeyConstraintError, DatabaseError} = require('sequelize')
+const {ValidationError} = require('joi')
+const {postCategoryValidation} = require('../validator/validation')
 const restrict = require('../middleware/passportMiddleware')
 const postsCategories = new PostsCategoriesController()
 const app = express.Router()
 
 app.post('/', restrict, async (req, res, next) => {
   try {
-    const {postId, categoryId} = req.body
+    const postCategory = await postCategoryValidation.validateAsync(req.body)
+    const {postId, categoryId} = postCategory
     const result = await postsCategories.add({postId, categoryId})
     res.status(200).json({
       status: '200 OK',
@@ -28,6 +31,13 @@ app.post('/', restrict, async (req, res, next) => {
         error: {
           status: '500 Internal Server Error',
           message: `Something went wrong, invalid input value`
+        }
+      })
+    } else if (error instanceof ValidationError) {
+      res.status(500).json({
+        error: {
+          status: '500 Internal Server Error',
+          message: `${error.details.map(err => err.message)}`
         }
       })
     }
