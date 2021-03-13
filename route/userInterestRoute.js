@@ -1,5 +1,7 @@
 const express = require('express')
 const UserInterestController = require('../controller/userInterestController')
+const UserController = require('../controller/userController');
+const userController = new UserController()
 const restrict = require('../middleware/passportMiddleware')
 
 const app = express.Router()
@@ -19,6 +21,8 @@ app.get('/getAllPost', restrict, async (req, res, next) => {
             const like = element.Posts_Likes.length
             const comment = element.Posts_Comments.length
 
+            const user = await userController.getId(element.userId)
+
             const result = {
                 id: element.id,
                 userId: element.userId,
@@ -30,6 +34,9 @@ app.get('/getAllPost', restrict, async (req, res, next) => {
                 filterComment: element.filterComment,
                 createdAt: element.createdAt,
                 updatedAt: element.updatedAt,
+                username: user.username,
+                fullName: user.fullName,
+                imageProfile: user.imageProfile,
                 like,
                 comment
             }
