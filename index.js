@@ -32,6 +32,7 @@ app.use('/follow', require('./route/followersRoute'))
 app.use('/users', require('./route/resetPasswordRoute'))
 app.use('/interest', require('./route/userInterestRoute'))
 app.use(authRoute)
+app.use('/users', require('./route/search'))
 app.use('/', require('./route/indexRoute'))
 
 app.get('/', (req, res) => {
