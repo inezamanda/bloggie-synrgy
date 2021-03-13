@@ -5,6 +5,8 @@ const app = express();
 // setting passport
 const passport = require('passport')
 const authRoute = require(`./route/authRoute`)
+const userAdminRoute = require(`./route/userAdminRoute`)
+const userRoute = require(`./route/userRoute`)
 const fs = require('fs')
 // kodingan untuk membuat folder "images" secara otomatis
 if (!fs.existsSync('images')) {
@@ -17,6 +19,10 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.static('views'));
 // app.use(multer)
 app.use(passport.initialize())
+app.use(authRoute)
+app.use(userAdminRoute)
+app.use(userRoute)
+app.use('/like', require('./route/postsLikesRoute'))
 app.use('/mainfeed', require('./route/mainFeedRoute'))
 app.use('/comment', require('./route/posts_commentsRoute'))
 app.use('/category', require('./route/categoriesRoute'))
@@ -31,6 +37,7 @@ app.use('/', require('./route/indexRoute'))
 app.get('/', (req, res) => {
   res.render('index');
 });
+
 
 app.use("/", (req, res, next) => {
   res.status("404").json({
