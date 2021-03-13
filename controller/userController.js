@@ -43,7 +43,7 @@ class UserController extends BaseController {
             };
             return payload;
         } else {
-            return "Sorry, your password was incorrect. Please double-check your password."
+            return false
         }
     }
 }
