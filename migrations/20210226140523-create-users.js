@@ -9,7 +9,8 @@ module.exports = {
       },
       email: {
         allowNull: false,
-        type: Sequelize.STRING(50)
+        type: Sequelize.STRING(50),
+        unique: true
       },
       password: {
         allowNull: false,
@@ -17,15 +18,14 @@ module.exports = {
       },
       username: {
         allowNull: false,
-        type: Sequelize.STRING(50)
+        type: Sequelize.STRING(50),
+        unique: true
       },
       fullName: {
+        allowNull: false,
         type: Sequelize.STRING(100)
       },
-      image_profile: {
-        type: Sequelize.STRING
-      },
-      image_header: {
+      imageProfile: {
         type: Sequelize.STRING
       },
       about: {
@@ -38,12 +38,9 @@ module.exports = {
         type: Sequelize.STRING(100)
       },
       role: {
-        type: Sequelize.ENUM({
-          values: ['User', 'Admin']
-        })
-      },
-      followers_id: {
-        type: Sequelize.STRING(21)
+        allowNull: false,
+        type: Sequelize.ENUM('User', 'Admin'),
+        defaultValue: 'User'
       },
       createdAt: {
         allowNull: false,

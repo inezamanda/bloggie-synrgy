@@ -1,17 +1,55 @@
 const express = require('express')
 const postController = require('../controller/postController')
 const upload = require('../middleware/multerMiddleware')
-const passport = require('passport')
-const restrict = passport.authenticate('jwt', { session: false })
+const restrict = require('../middleware/passportMiddleware')
+
+const {postValidation, editPostValidation} = require('../validator/validation')
+const {ValidationError} = require('joi')
+const {DatabaseError, ForeignKeyConstraintError} = require('sequelize')
 
 const app = express.Router()
+
+app.get('/LastWeek', restrict, async (req, res, next) => {
+  try {
+    const result = await postController.getPostLastWeek()
+    res.status(200).json({
+      success: true,
+      message: 'Success',
+      data: result
+    })
+  } catch (error) {
+    next(error)
+  }
+})
+
+app.get('/active', restrict, async (req, res, next) => {
+  try {
+    const { id } = req.user
+    const result = await postController.get({ userId: id })
+    if (!result[0]) {
+      res.status(400).json({
+        success: false,
+        message: 'Data not found',
+        data: result
+      })
+    } else {
+      res.status(200).json({
+        success: true,
+        message: 'Success',
+        data: result
+      })
+    }
+  } catch (error) {
+    next(error)
+  }
+})
 
 app.get('/', async (req, res, next) => {
   try {
     const result = await postController.get()
     res.status(200).json({
-      success: true,
-      message: 'Success',
+      status: '200 OK',
+      message: 'Read all posts successful',
       data: result
     })
   } catch (error) {
@@ -22,61 +60,123 @@ app.get('/', async (req, res, next) => {
 app.get('/:id', async (req, res, next) => {
   try {
     const { id } = req.params
-    const result = await postController.get({ id })
-    res.status(200).json({
-      success: true,
-      message: 'Success',
-      data: result
-    })
+    const result = await postController.getPostById( id )
+    if (result) {
+      res.status(200).json({
+        status: '200 OK',
+        message: 'Read posts successful',
+        data: result
+      })      
+    } else{
+      res.status(404).json({
+        error: {
+          status: '404 Not Found',
+          message: 'posts not found'
+        }
+      })
+    }    
   } catch (error) {
     next(error)
   }
 })
 
-app.post('/', restrict, upload.single('uploaded'), async (req, res, next) => {
+app.post('/', restrict, upload.single('imagePost'), async (req, res, next) => {
   try {
-    const files = req.file.path
-    const { users_id, title, content, filterView, filterComment, isReported } = req.body
+    const imagePost = req.file ? req.file.path : undefined
+    const file = req.files ? req.files.path : undefined
+    const post = await postValidation.validateAsync(req.body)
+    const userId = req.user.id
+    const { title, content, filterView, filterComment } = post
     const result = await postController.add({
-      users_id,
+      userId,
       title,
       content,
-      files,
+      imagePost,
+      file,
       filterView,
-      filterComment,
-      isReported
+      filterComment
     })
     res.status(201).json({
-      success: true,
-      message: 'Success add data',
+      status: '201 Created',
+      message: 'Add posts successful',
       data: result
     })
   } catch (error) {
-    next(error)
+    if (error instanceof ForeignKeyConstraintError){
+      res.status(500).json({
+        error: {
+          status: '500 Internal Server Error',
+          message: `Something wrong, foreign key constraint doesn't match`
+        }
+      })
+    } else if (error instanceof ValidationError){
+      res.status(500).json({
+        error: {
+          status: '500 Internal Server Error',
+          message: `${error.details.map(err => err.message)}`
+        }
+      })
+    } else if (error instanceof DatabaseError) {
+      res.status(500).json({
+        error: {
+          status: '500 Internal Server Error',
+          message: `Something went wrong, invalid input value`
+        }
+      })
+    } else {
+      next(error)
+    }    
   }
 })
 
-app.put('/:id', restrict, upload.single('uploaded'), async (req, res, next) => {
+app.put('/:id', restrict, upload.single('imagePost'), async (req, res, next) => {
   try {
     const { id } = req.params
-    const files = req.file.path
-    const { users_id, title, content, filterView, filterComment, isReported } = req.body
+    const imagePost = req.files ? req.files.path : undefined
+    const file = req.file ? req.file.path : undefined
+    const post = await editPostValidation.validateAsync(req.body)
+    const userId = req.user.id
+    const { title, content, filterView, filterComment } = post
     const result = await postController.edit(id, {
-      users_id,
+      userId,
       title,
       content,
-      files,
+      imagePost,
+      file,
       filterView,
-      filterComment,
-      isReported
+      filterComment
     })
-    res.status(201).json({
-      success: true,
-      message: `Updated id = '${id}' successfully`,
-      data: result
-    })
+    if (result[0]){
+      res.status(200).json({
+        status: '200 OK',
+        message: 'Edit posts successful'
+      })     
+    } else {
+      res.status(400).json({
+        error: {
+          status: '400 Bad Request',
+          message: `Posts could not be edited. Please check posts id or your input`
+        }
+      })
+    }    
   } catch (error) {
-    next(error)
+    if (error instanceof ValidationError){
+      res.status(500).json({
+        error: {
+          status: '500 Internal Server Error',
+          message: `${error.details.map(err => err.message)}`
+        }
+      })
+    } else if (error instanceof DatabaseError) {
+      res.status(500).json({
+        error: {
+          status: '500 Internal Server Error',
+          message: `Something went wrong, invalid input value`
+        }
+      })
+    } else {
+      next(error)
+    }
   }
 })
 
@@ -84,11 +184,17 @@ app.delete('/:id', restrict, async (req, res, next) => {
   try {
     const { id } = req.params
     const result = await postController.remove(id)
-    res.status(200).json({
-      success: true,
-      message: `Deleted id = '${id}' successfully`,
-      data: result
-    })
+    if (result) {
+      res.status(200).json({
+        status: '200 OK',
+        message: 'Delete posts successful'
+      })
+    } else {
+      res.status(404).json({
+        status: '404 Not Found',
+        message: 'Posts not found'
+      })
+    }
   } catch (error) {
     next(error)
   }
