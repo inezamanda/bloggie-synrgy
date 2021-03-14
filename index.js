@@ -13,7 +13,7 @@ if (!fs.existsSync('public/images', {recursive: true})) {
 app.set('view engine', 'ejs');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
-app.use('/', express.static('public'));
+app.use('/public', express.static('public'));
 app.use(passport.initialize())
 app.use('/', require(`./route/authRoute`))
 app.use('/like', require('./route/postsLikesRoute'))
