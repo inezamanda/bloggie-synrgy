@@ -11,9 +11,9 @@ const app = express.Router()
 app.get('/search', restrict, async (req, res, next) => {
     try {
         const { keyword } = req.body
-        const result = await  user.get({
+        const result = await user.get({
             fullName: {
-                [Op.substring]: keyword,
+                [Op.iLike]: keyword,
             }
         })
         if (!result[0]) {
