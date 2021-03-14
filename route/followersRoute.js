@@ -59,7 +59,7 @@ app.get('/', async (req, res, next) => {
   }
 })
 
-app.delete('/:id', async (req, res, next) => {
+app.delete('/:id', restrict, async (req, res, next) => {
   const { params } = req
   const result = await followers.remove(params.id)
   if (result) {

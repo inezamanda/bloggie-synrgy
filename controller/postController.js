@@ -1,4 +1,4 @@
-const { Posts } = require('../models')
+const { Posts, Users } = require('../models')
 const BaseController = require('./baseController')
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op
@@ -18,6 +18,17 @@ class PostsController extends BaseController {
         }
       },
       order: [['createdAt', 'ASC']]
+    })
+  }
+
+  async getPostById(id) {
+    return await Posts.findOne({
+      where: {
+        id
+      }, include: {
+        model: Users,
+        required: true
+      }
     })
   }
 }
