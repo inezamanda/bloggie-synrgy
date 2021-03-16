@@ -60,7 +60,7 @@ app.get('/', async (req, res, next) => {
 app.get('/:id', async (req, res, next) => {
   try {
     const { id } = req.params
-    const result = await postController.getPostById( id )
+    const result = await postController.getPost( id )
     if (result) {
       res.status(200).json({
         status: '200 OK',

@@ -6,11 +6,6 @@ const commentValidation = Joi.object({
     .max(21)
     .required(),
 
-  userId: Joi.string()
-    .min(1)
-    .max(21)
-    .required(),
-
   content: Joi.string()
     .trim()
     .min(1)
@@ -64,11 +59,6 @@ const editCategoryValidation = Joi.object({
 })
 
 const postValidation = Joi.object({
-  userId: Joi.string()
-    .min(1)
-    .max(21)
-    .required(),
-
   title: Joi.string()
     .trim()
     .min(1)
