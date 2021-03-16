@@ -2,17 +2,15 @@ const express = require('express')
 const savedPostController = require('../controller/savedPostController')
 const restrict = require('../middleware/passportMiddleware')
 
-
 const app = express.Router()
 
 app.post('/', restrict, async (req, res, next) => {
   try {
-    const users_id = req.user.id
-    const { posts_id } = req.body
+    const userId = req.user.id
+    const { postId } = req.body
     const result = await savedPostController.add({
-      posts_id,
-      users_id,
-      
+      userId,
+      postId,
     })
     res.status(201).json({
       success: true,
@@ -21,7 +19,7 @@ app.post('/', restrict, async (req, res, next) => {
     })
   } catch (error) {
     next(error)
-  }d
+  } d
 })
 
 app.delete('/:id', restrict, async (req, res, next) => {

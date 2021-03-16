@@ -1,9 +1,9 @@
-const { Posts_saved } = require('../models')
+const { Posts_Saves } = require('../models')
 const BaseController = require('./baseController')
 
 class savedPostsController extends BaseController {
   constructor() {
-    super(Posts_saved)
+    super(Posts_Saves)
   }
 }
 

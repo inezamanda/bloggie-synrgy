@@ -6,8 +6,8 @@ const app = express();
 const passport = require('passport')
 const fs = require('fs')
 // kodingan untuk membuat folder "images" secara otomatis
-if (!fs.existsSync('public/images', {recursive: true})) {
-  fs.mkdirSync('public/images', {recursive: true})
+if (!fs.existsSync('public/images', { recursive: true })) {
+  fs.mkdirSync('public/images', { recursive: true })
 }
 
 app.set('view engine', 'ejs');
@@ -23,7 +23,6 @@ app.use('/category', require('./route/categoriesRoute'))
 app.use('/postcategory', require('./route/postsCategoriesRoute'))
 app.use('/post', require('./route/postRoute'))
 app.use('/saved', require('./route/postSavedRoute'))
-app.use(authRoute)
 app.use('/follow', require('./route/followersRoute'))
 app.use('/interest', require('./route/userInterestRoute'))
 app.use('/user', require('./route/resetPasswordRoute'), require(`./route/userRoute`), require('./route/search'))
