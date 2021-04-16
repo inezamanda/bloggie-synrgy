@@ -32,14 +32,14 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
-app.use("/", (req, res, next) => {
-  res.status("404").json({
-    error: {
-      status: "404 Not Found",
-      message: "Route not found"
-    }
-  })
-})
+// app.use("/", (req, res, next) => {
+//   res.status("404").json({
+//     error: {
+//       status: "404 Not Found",
+//       message: "Route not found"
+//     }
+//   })
+// })
 
 const port = process.env.PORT;
 app.listen(port, () => {
